@@ -1,0 +1,580 @@
+
+/* ========================================
+   ADHERENCE PAGE
+======================================== */
+
+.workspace.adherence-workspace {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.adherence-page-content {
+  width: min(100%, 668px);
+  margin: 0 auto;
+}
+
+
+/* ========================================
+   REPORT HEADER
+======================================== */
+
+.adherence-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  margin-bottom: 18px;
+  gap: 20px;
+}
+
+.headertx {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.headertx h3 {
+  margin: 0;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.headertx p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.adherence-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: 14px;
+}
+
+.period-selecttxt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--text-dark);
+  font-size: var(--text-base);
+  white-space: nowrap;
+}
+
+.period-selecttxt select {
+  min-height: 34px;
+  padding: 5px 8px;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.4);
+  border-radius: 4px;
+
+  color: var(--text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+#exportbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 6px 12px;
+  gap: 8px;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.4);
+  border-radius: 4px;
+
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#exportbtn:hover {
+  background: var(--gray-bg);
+  border-color: var(--navy);
+}
+
+
+/* ========================================
+   REPORT CARDS
+======================================== */
+
+.report-cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.report-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  min-width: 0;
+  min-height: 94px;
+  padding: 7px 10px 6px;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.35);
+  border-radius: 5px;
+}
+
+.report-card-label {
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: 1.3;
+}
+
+.report-card-value {
+  margin: 1px 0 0;
+
+  color: var(--navy);
+  font-family: "Manrope", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.report-card-value.missed-value {
+  color: #E32424;
+}
+
+.report-card-value.late-value {
+  color: #E58A00;
+}
+
+.report-card-description {
+  margin: auto 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.3;
+}
+
+.adherence-progress {
+  width: 100%;
+  height: 10px;
+  margin: 0 0 2px;
+
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.55);
+  border-radius: 100px;
+}
+
+.adherence-progress-fill {
+  height: 100%;
+  background: #8DB8D8;
+  border-right: 1px solid var(--navy);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+
+/* ========================================
+   RECENT DOSE HISTORY
+======================================== */
+
+.dose-history-container {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 10px 12px;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.35);
+  border-radius: 5px;
+}
+
+.dose-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.dose-history-header h3 {
+  margin: 0;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+}
+
+.rdh-overlay-opener {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 4px;
+  gap: 5px;
+
+  background: transparent;
+  border: 0;
+  color: var(--navy);
+
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+}
+
+.rdh-overlay-opener:hover {
+  opacity: 0.7;
+}
+
+.dose-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dose-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 44px;
+  padding: 3px 26px 3px 14px;
+  gap: 16px;
+}
+
+.his-left-side {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 24px;
+}
+
+.his-left-side > i {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+
+  color: #484848;
+  font-size: 27px;
+}
+
+.dose-history-information {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0;
+}
+
+.dose-med-name {
+  overflow: hidden;
+  color: var(--text-dark);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dose-time {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.his-right-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: 10px;
+}
+
+.recorded-by {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.dose-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 75px;
+  min-height: 34px;
+  padding: 5px 10px;
+
+  background: #FFFFFF;
+  border: 1px solid;
+  border-radius: 6px;
+
+  font-size: var(--text-sm);
+}
+
+.taken-status {
+  border-color: rgba(30, 30, 30, 0.3);
+  color: var(--navy);
+}
+
+.missed-status {
+  border-color: #FF4545;
+  color: #FF3333;
+}
+
+.late-status {
+  border-color: #F3A044;
+  color: #E58A00;
+}
+
+
+/* ========================================
+   CLICKABLE REPORT CARDS
+======================================== */
+
+.report-card {
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.report-card:hover {
+  background: #F7FAFC;
+  border-color: var(--navy);
+}
+
+.report-card:active {
+  transform: scale(0.99);
+}
+
+.report-card:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   DOSE HISTORY OVERLAY HEADER
+======================================== */
+
+.dose-history-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dose-history-heading p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ========================================
+   VIEW ALL DOSE HISTORY OVERLAY
+======================================== */
+
+.dose-history-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  background: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.dose-history-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dose-history-dialog {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: min(700px, 100%);
+  min-height: min(450px, calc(100vh - 48px));
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.3);
+  border-radius: 10px;
+
+  transform: translateY(12px);
+  transition: transform 0.2s ease;
+}
+
+.dose-history-overlay.is-open .dose-history-dialog {
+  transform: translateY(0);
+}
+
+.dose-history-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(30, 30, 30, 0.2);
+}
+
+.dose-history-dialog-header h2 {
+  margin: 0;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.dose-history-close {
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-dark);
+
+  font-size: var(--text-lg);
+  cursor: pointer;
+}
+
+.dose-history-close:hover {
+  background: var(--gray-bg);
+}
+
+.dose-history-dialog-content {
+  min-height: 0;
+  padding: 12px 10px;
+  overflow-y: auto;
+}
+
+.dose-history-dialog-content .dose-history-row {
+  min-height: 60px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(30, 30, 30, 0.12);
+}
+
+.dose-history-dialog-content .dose-history-row:last-child {
+  border-bottom: 0;
+}
+
+.dose-history-empty {
+  padding: 35px 15px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1100px) {
+  .adherence-page-content {
+    width: min(100%, 720px);
+  }
+
+  .adherence-header {
+    gap: 12px;
+  }
+
+  .adherence-action-buttons {
+    gap: 8px;
+  }
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 760px) {
+  .adherence-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adherence-action-buttons {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .report-card {
+    min-height: 90px;
+  }
+
+  .dose-history-row {
+    padding-right: 4px;
+    padding-left: 4px;
+    gap: 8px;
+  }
+
+  .his-left-side {
+    gap: 10px;
+  }
+
+  .his-right-side {
+    gap: 5px;
+  }
+
+  .recorded-by {
+    display: none;
+  }
+
+  .dose-status {
+    min-width: 58px;
+    padding: 5px 7px;
+  }
+
+  .dose-history-overlay {
+    padding: 12px;
+  }
+
+  .dose-history-dialog {
+    max-height: calc(100vh - 24px);
+  }
+}
+
+@media (max-width: 460px) {
+      .report-cards-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .adherence-progress-fill,
+  .dose-history-overlay,
+  .dose-history-dialog,
+  #exportbtn {
+    transition: none;
+  }
+}

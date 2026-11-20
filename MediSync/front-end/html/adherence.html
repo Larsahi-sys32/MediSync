@@ -123,23 +123,28 @@
         <nav class="sidebar-navigation" aria-label="Main navigation">
 
           <a href="dashboard.html" class="nav-link">
-            Dashboard
+            <i class="fa-solid fa-house-medical"></i>
+            <span class="pagelink">Dashboard</span>
           </a>
 
           <a href="calendar.html" class="nav-link">
-            Calendar
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="pagelink">Calendar</span>
           </a>
 
           <a href="medications.html" class="nav-link">
-            Medications
+            <i class="fa-solid fa-capsules"></i>
+            <span class="pagelink">Medications</span>
           </a>
 
           <a href="adherence.html" class="nav-link active">
-            Adherence
+            <i class="fa-solid fa-file-waveform"></i>
+            <span class="pagelink">Adherence</span>
           </a>
 
-          <a href="profile.html" class="nav-link">
-            Profile
+          <a href="settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span class="pagelink">Settings</span>
           </a>
 
         </nav>
@@ -182,7 +187,59 @@
 
       <!-- WORKSPACE -->
       <main class="workspace">
+        <div class="adherence-header">
+          <section class="headertx">
+            <h3 id="">
+              Medication Report
+            </h3>
+            <p>
+              showing reports from <!--selected period-->
+            </p>
+          </section>
 
+          <div class="adherence-action-buttons">
+            <label class="period-selecttxt" for="report-period">
+            Period
+            <span class="sr-only">Select report period</span>
+            <select id="report-period">
+              <option value="today">Today</option>
+              <option value="this-week">This Week</option>
+              <option value="this-month">This Month</option>
+              <option value="this-year">This Year</option>
+              <option value="all-time">All Time</option>
+            </select>
+          </label>
+
+            <button type="button" id="exportbtn">
+              <i class="fa-solid fa-file-export"></i>
+              Export
+            </button>
+          </div>
+        </div>
+
+        <div class="adherence-content">
+          <div class="report-cards-container">
+            <!--adherence report cards here-->
+            <!--2x2 grid of cards similar to dashboard cards-->
+          </div>
+          <div class="dose-history-container">
+            <!--recent dose history-->
+            <div class="dose-history-header">
+              <h3>Recent Dose History</h3>
+              <button class="rdh-overlay-opener">
+                View All <!--opens a overlay with dim bg-->
+              </button>
+            </div>
+            <div class="dose-history-row">
+              <div class="his-left-side">
+                <!--date, med_img, med_name, time_recorded-->
+              </div>
+              <div class="his-right-side">
+                <!--profile icon (if its recorded by someone else), status containter (taken,missed,late)-->
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
 
     </div>
