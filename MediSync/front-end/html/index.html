@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSync | Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <div class="global-page">
+    <header class="topbar"
+            style="
+              background-image: url('/auth-topbar-background.png');
+              border: none;
+              box-shadow: none;">
+      <div class="topbar-logo">
+        <div class="brand">MediSync</div>
+      </div>
+
+      <div class="topbar-actions">
+        <a class="admin-landing-button" href="admin.html" aria-label="Go to admin landing page" title="Admin">
+          <i class="fa-solid fa-user-gear" aria-hidden="true"></i>
+        </a>
+      </div>
+    </header>
+
+    <main class="auth-layout">
+      <div class="upper">
+        <section class="left" aria-label="MediSync introduction">
+          <div class="left-copy">
+            <p class="eyebrow">MEDICATION MANAGEMENT MADE SIMPLE</p>
+            <h1>Never miss a<br>dose again.</h1>
+          </div>
+          <p class="description">
+            MediSync help recipients of care keep<br class="desktop-only">
+            track of medications, daily schedules and adherence,<br class="desktop-only">
+            all in one place.
+          </p>
+        </section>
+
+        <section class="right" aria-label="Sign up or log in">
+          <div class="auth-tabs" role="tablist" aria-label="Account access">
+            <button class="auth-tab" id="login-tab" type="button" role="tab" aria-selected="false">Login</button>
+            <button class="auth-tab active" id="signup-tab" type="button" role="tab" aria-selected="true">Sign Up</button>
+          </div>
+
+          <form id="auth-form" novalidate>
+            <div class="form-fields">
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="password">Password</label>
+                <div class="password-input">
+                  <input id="password" name="password" type="password" autocomplete="new-password" required>
+                  <button class="eye-toggle" type="button" data-target="password" aria-label="Show password">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                  </button>
+                </div>
+                
+              </div>
+              
+              <div class="field confirm-field">
+                <label for="confirm-password">Confirm Password</label>
+                <div class="password-input">
+                  <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required>
+                  <button class="eye-toggle" type="button" data-target="confirm-password" aria-label="Show confirm password">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <p class="form-error" id="form-error" aria-live="polite"></p>
+            
+            </div>
+
+            <div class="terms-row">
+              <label class="terms-label" for="terms">
+                <span>Agree with <a href="terms.html" target="_blank" rel="noopener">Terms and Services</a></span>
+                <input id="terms" name="terms" type="checkbox" required>
+                <span class="checkbox-ui" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+              </label>
+            </div>
+              <div class="forgot-password-row">
+                <a href="#" id="forgot-password-link">Forgot Password?</a>
+              </div>
+            <button class="submit-button" id="submit-button" type="submit" disabled>Sign Up</button>
+            
+          </form>
+        </section>
+      </div>
+
+      <footer class="legal-navigation">
+        <span>© 2026 MediSync</span>
+      </footer>
+    </main>
+  </div>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

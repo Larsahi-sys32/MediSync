@@ -1,0 +1,34 @@
+/* Kimuel the Pharmacists - floating OTC medicine chat */
+.kimuel-fab{position:fixed;right:24px;bottom:24px;z-index:100;display:flex;align-items:center;gap:10px;padding:12px 18px;border:0;border-radius:999px;background:var(--navy);color:#fff;font-family:"Manrope","Inter",sans-serif;font-weight:600;font-size:var(--text-sm);box-shadow:0 6px 20px rgba(27,75,114,.35)}
+.kimuel-fab i{font-size:1.2em}
+.kimuel-fab:hover{background:#163d5d}
+.kimuel-panel{position:fixed;right:24px;bottom:24px;z-index:101;width:380px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 48px);display:none;flex-direction:column;background:#fff;border:1px solid var(--sidebar-blue);border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.22);overflow:hidden;font-family:"Inter",sans-serif}
+.kimuel-panel.open{display:flex}
+.kimuel-fab.hidden{display:none}
+.kimuel-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--navy);color:#fff}
+.kimuel-avatar{width:38px;height:38px;border-radius:50%;background:var(--sidebar-blue);color:var(--navy);display:grid;place-items:center;font-size:18px;flex:none}
+.kimuel-title{flex:1;min-width:0}
+.kimuel-title strong{display:block;font-family:"Manrope","Inter",sans-serif;font-size:var(--text-base)}
+.kimuel-title span{font-size:var(--text-xs);opacity:.85}
+.kimuel-close{border:0;background:transparent;color:#fff;font-size:18px;padding:6px}
+.kimuel-note{margin:0;padding:8px 14px;background:#fff6e0;color:#7a4b00;font-size:var(--text-xs)}
+.kimuel-profile{margin:0;padding:6px 14px;font-size:var(--text-xs);color:var(--text-muted);border-bottom:1px solid #e6eef5}
+.kimuel-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#f6fafd}
+.kimuel-msg{max-width:88%;padding:10px 13px;border-radius:16px;font-size:var(--text-sm);line-height:1.5;overflow-wrap:anywhere}
+.kimuel-msg p{margin:0 0 6px}.kimuel-msg p:last-child{margin:0}
+.kimuel-msg ul{margin:4px 0 8px;padding-left:18px}
+.kimuel-msg.bot{align-self:flex-start;background:var(--sidebar-blue);color:var(--text-dark);border-bottom-left-radius:4px}
+.kimuel-msg.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.kimuel-msg.alert{background:#fde8e8;color:#8a1c1c;border:1px solid #e9a9a9}
+.kimuel-chips{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start}
+.kimuel-chip{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;padding:6px 12px;font-size:var(--text-xs)}
+.kimuel-chip:hover{background:var(--sidebar-blue)}
+.kimuel-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e6eef5;background:#fff}
+.kimuel-form input{flex:1;min-width:0;padding:11px 14px;border:1px solid var(--light-blue);border-radius:12px;font-size:var(--text-sm)}
+.kimuel-form input:focus{outline:2px solid var(--navy);outline-offset:0}
+.kimuel-form button{border:0;border-radius:12px;padding:0 16px;background:var(--navy);color:#fff;font-weight:600}
+.kimuel-form button:disabled,.kimuel-form input:disabled{opacity:.55;cursor:not-allowed}
+.kimuel-dots span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--navy);opacity:.4;animation:kimuel-b 1s infinite}
+.kimuel-dots span:nth-child(2){animation-delay:.15s}.kimuel-dots span:nth-child(3){animation-delay:.3s}
+@keyframes kimuel-b{0%,80%,100%{opacity:.25}40%{opacity:1}}
+@media (max-width:600px){.kimuel-panel{right:0;bottom:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0}.kimuel-fab{right:16px;bottom:16px}}

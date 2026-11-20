@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediSync | Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/dashboard.css">
+  <link rel="stylesheet" href="/front-end/css/kimuel.css">
+</head>
+
+<body>
+
+  <div class="global-page">
+
+    <!-- TOPBAR -->
+    <header class="topbar"> 
+
+      <div class="topbar-logo">
+        <div class="brand">MediSync</div>
+      </div>
+
+      <div class="topbar-actions">
+
+        <!-- PROFILE SELECTOR -->
+        <details class="profile-selector" id="profile-selector">
+
+          <summary class="profile-selector-button">
+
+            <span class="profile-avatar">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <span class="selected-profile" id="selected-profile">
+              My Medications
+            </span>
+
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+
+          </summary>
+
+          <div class="profile-dropdown">
+
+            <div class="dropdown-current-profile">
+              <span class="profile-avatar large">
+                <i class="fa-solid fa-circle-user"></i>
+              </span>
+
+              <span id="dropdown-current-name">
+                My Medications
+              </span>
+
+              <i class="fa-solid fa-chevron-up"></i>
+            </div>
+
+            <div class="dropdown-content">
+
+              <h2>People I Care For</h2>
+
+              <button
+                class="connected-profile"
+                type="button"
+                data-profile="MJ Fenol"
+              >
+                <span class="profile-avatar connected-avatar">
+                  <i class="fa-solid fa-circle-user"></i>
+                </span>
+
+                <span>Connected user name</span>
+              </button>
+
+              <a
+                href="profile.html#people-i-care-for"
+                class="add-person"
+              >
+                <span class="add-person-icon">
+                  <i class="fa-solid fa-plus"></i>
+                </span>
+
+                <span>Add a Person</span>
+              </a>
+
+            </div>
+          </div>
+
+        </details>
+
+        <!-- NOTIFICATIONS -->
+        <button
+          class="notification-button"
+          type="button"
+          aria-label="Notifications"
+          title="Notifications"
+        >
+          <i class="fa-solid fa-bell"></i>
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- MAIN LAYOUT -->
+    <div class="global-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <nav class="sidebar-navigation" aria-label="Main navigation">
+
+          <a href="dashboard.html" class="nav-link active">
+            <i class="fa-solid fa-house-medical"></i>
+            <span class="pagelink">Dashboard</span>
+          </a>
+
+          <a href="calendar.html" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="pagelink">Calendar</span>
+          </a>
+
+          <a href="medications.html" class="nav-link">
+            <i class="fa-solid fa-capsules"></i>
+            <span class="pagelink">Medications</span>
+          </a>
+
+          <a href="adherence.html" class="nav-link">
+            <i class="fa-solid fa-file-waveform"></i>
+            <span class="pagelink">Adherence</span>
+          </a>
+
+          <a href="profile.html" class="nav-link">
+            <i class="fa-solid fa-user"></i>
+            <span class="pagelink">Profile</span>
+          </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR USER INFORMATION -->
+        <div class="sidebar-user">
+
+          <div class="sidebar-user-information">
+
+            <span class="sidebar-user-avatar">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <div class="sidebar-user-text">
+              <span class="sidebar-user-name">
+                User Name
+              </span>
+
+              <span class="sidebar-user-type">
+                User
+              </span>
+            </div>
+
+          </div>
+
+          <a
+            href="index.html"
+            class="logout-button"
+            aria-label="Log out"
+            title="Log out"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <!-- WORKSPACE -->
+      <main class="workspace">
+
+        <!-- GREETING -->
+        <section class="greeting">
+
+          <h1>Good morning!</h1>
+
+          <p>
+            Here’s your medication overview for today.
+          </p>
+
+        </section>
+
+
+        <!-- OVERVIEW CARDS -->
+        <section class="overview-cards">
+
+          <!-- TODAY'S PROGRESS -->
+          <article class="overview-card progress-card">
+
+            <h2>Today’s Progress</h2>
+
+            <p class="progress-number">
+              - of -
+            </p>
+
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-label="Today's medication progress"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <div class="progress-current"></div>
+            </div>
+
+            <p class="progress-description">
+              Doses recorded
+            </p>
+
+          </article>
+
+
+          <!-- NEXT DOSE -->
+          <article class="overview-card next-dose-card">
+
+            <h2>Next dose</h2>
+
+            <p class="next-dose-time">
+              --:-- AM/PM
+            </p>
+
+            <div class="next-dose-details">
+
+              <span class="next-dose-medication">
+                Medication name
+              </span>
+
+              <a href="medications.html" class="details-link">
+                View details <span>→</span>
+              </a>
+
+            </div>
+
+          </article>
+
+        </section>
+
+
+        <!-- TODAY'S SCHEDULE -->
+        <section class="schedule-section">
+
+          <div class="section-heading">
+
+            <h2>Today’s schedule</h2>
+
+            <a href="calendar.html" class="details-link">
+              View full schedule <span>→</span>
+            </a>
+
+          </div>
+
+
+          <div class="schedule-cards">
+
+            <!-- MORNING -->
+            <article class="schedule-card morning-card">
+
+              <i class="fa-solid fa-sun schedule-icon"></i>
+
+              <h3>Morning medication</h3>
+
+              <p class="medication">
+                medication_name
+              </p>
+
+              <span class="schedule-status upcoming">
+                Upcoming/Taken
+              </span>
+
+            </article>
+
+
+            <!-- AFTERNOON -->
+            <article class="schedule-card afternoon-card">
+
+              <i class="fa-solid fa-cloud-sun schedule-icon"></i>
+
+              <h3>Afternoon medication</h3>
+
+              <p class="medication">
+                medication_name
+              </p>
+
+              <span class="schedule-status upcoming">
+                Upcoming/Taken
+              </span>
+
+            </article>
+
+
+            <!-- EVENING -->
+            <article class="schedule-card evening-card">
+
+              <i class="fa-solid fa-moon schedule-icon"></i>
+
+              <h3>Evening medication</h3>
+
+              <p class="medication">
+                medication_name
+              </p>
+
+              <span class="schedule-status upcoming">
+                Upcoming/Taken
+              </span>
+
+            </article>
+
+          </div>
+
+        </section>
+
+
+        <!-- REFILL REMINDER -->
+        <section class="refill-card">
+
+          <i class="fa-solid fa-retweet refill-icon"></i>
+
+          <div class="refill-information">
+
+            <h2>Refill reminder</h2>
+
+            <p>
+              Your Medication_name runs out in _ days.
+            </p>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFILE SELECTOR INTERACTION -->
+  <script>
+    const profileSelector = document.getElementById("profile-selector");
+    const selectedProfile = document.getElementById("selected-profile");
+    const dropdownCurrentName = document.getElementById("dropdown-current-name");
+
+    document.querySelectorAll(".connected-profile").forEach(profile => {
+      profile.addEventListener("click", () => {
+        const name = profile.dataset.profile;
+
+        selectedProfile.textContent = name;
+        dropdownCurrentName.textContent = name;
+
+        profileSelector.open = false;
+      });
+    });
+  </script>
+
+  <script src="/js/kimuel-rules.js"></script>
+  <script src="/js/kimuel.js"></script>
+</body>
+</html>

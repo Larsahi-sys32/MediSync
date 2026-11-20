@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediSync | Calendar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/calendar.css">
+  <link rel="stylesheet" href="/front-end/css/kimuel.css">
+</head>
+
+<body>
+
+<div class="global-page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+
+    <div class="topbar-logo">
+      <div class="brand">MediSync</div>
+    </div>
+
+    <div class="topbar-actions">
+
+      <!-- PROFILE SELECTOR -->
+      <details class="profile-selector" id="profile-selector">
+
+        <summary class="profile-selector-button">
+
+          <span class="profile-avatar">
+            <i class="fa-solid fa-circle-user"></i>
+          </span>
+
+          <span class="selected-profile" id="selected-profile">
+            My Medications
+          </span>
+
+          <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+
+        </summary>
+
+        <div class="profile-dropdown">
+
+          <div class="dropdown-current-profile">
+
+            <span class="profile-avatar large">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <span id="dropdown-current-name">
+              My Medications
+            </span>
+
+            <i class="fa-solid fa-chevron-up"></i>
+
+          </div>
+
+          <div class="dropdown-content">
+
+            <h2>People I Care For</h2>
+
+            <button
+              class="connected-profile"
+              type="button"
+              data-profile="MJ Fenol"
+            >
+              <span class="profile-avatar connected-avatar">
+                <i class="fa-solid fa-circle-user"></i>
+              </span>
+
+              <span>MJ Fenol</span>
+            </button>
+
+            <a
+              href="profile.html#people-i-care-for"
+              class="add-person"
+            >
+              <span class="add-person-icon">
+                <i class="fa-solid fa-plus"></i>
+              </span>
+
+              <span>Add a Person</span>
+            </a>
+
+          </div>
+        </div>
+
+      </details>
+
+      <!-- NOTIFICATIONS -->
+      <button
+        class="notification-button"
+        type="button"
+        aria-label="Notifications"
+        title="Notifications"
+      >
+        <i class="fa-solid fa-bell"></i>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN LAYOUT -->
+  <div class="global-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <nav class="sidebar-navigation" aria-label="Main navigation">
+
+        <a href="dashboard.html" class="nav-link">
+          Dashboard
+        </a>
+
+        <a href="calendar.html" class="nav-link active">
+          Calendar
+        </a>
+
+        <a href="medications.html" class="nav-link">
+          Medications
+        </a>
+
+        <a href="adherence.html" class="nav-link">
+          Adherence
+        </a>
+
+        <a href="profile.html" class="nav-link">
+          Profile
+        </a>
+
+      </nav>
+
+      <!-- SIDEBAR USER -->
+      <div class="sidebar-user">
+
+        <div class="sidebar-user-information">
+
+          <span class="sidebar-user-avatar">
+            <i class="fa-solid fa-circle-user"></i>
+          </span>
+
+          <div class="sidebar-user-text">
+
+            <span class="sidebar-user-name">
+              User Name
+            </span>
+
+            <span class="sidebar-user-type">
+              User
+            </span>
+
+          </div>
+
+        </div>
+
+        <a
+          href="index.html"
+          class="logout-button"
+          aria-label="Log out"
+          title="Log out"
+        >
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+
+      </div>
+
+    </aside>
+
+
+    <!-- WORKSPACE -->
+    
+<main class="workspace">
+
+  <!-- CALENDAR TABS -->
+  <div class="calendar-tabs" role="tablist"
+       aria-label="Calendar view selection">
+
+    <button class="calendar-tab active"
+            id="todsched-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="today-panel">
+      Today's Schedule
+    </button>
+
+    <button class="calendar-tab"
+            id="monthcal-tab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="month-panel">
+      Monthly Calendar
+    </button>
+
+  </div>
+
+  <!-- TODAY'S SCHEDULE -->
+   <section class="calendar-panel"
+         id="today-panel"
+         data-tab-panel="today">
+    <div class="workspace-container">
+
+      <div class="view-heading">
+        <div>
+          <p>WW, DD, YR</p>
+        </div>
+
+        <span class="schedule-count">
+          1 scheduled
+        </span>
+      </div>
+
+      <div class="medication-list">
+
+        <article class="medication-row">
+
+          <div class="medication-time">
+            00:00 AM
+          </div>
+
+          <div class="medication-information">
+            <h3>Medication Name</h3>
+            <p>Dose Amount</p>
+          </div>
+
+          <div class="medication-actions">
+
+            <div class="notification-control">
+              <span class="notification-label">Notifications</span>
+
+              <label class="notification-switch">
+                <input type="checkbox" checked>
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <button class="medication-action-button">
+              <i class="fa-regular fa-note-sticky"></i>
+            </button>
+
+            <button class="medication-status-button">
+              Mark as Taken
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MONTHLY CALENDAR -->
+  <section class="calendar-panel"
+           id="month-panel"
+           data-tab-panel="month"
+           hidden>
+    <div class="calendar-header">
+      <h2 id="current-month">
+        Month Year
+      </h2>
+
+      <div class="month-navigation">
+        <button type="button" id="prev-month">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <button type="button" id="next-month">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="calendar-grid" id="calendar-grid">
+
+      <!-- Calendar dates will be generated by JavaScript -->
+
+    </div>
+  </section>
+
+</main>
+
+
+  </div>
+</div>
+
+
+<!-- INSTRUCTIONS MODAL -->
+<div
+  class="note-overlay"
+  id="note-overlay"
+  aria-hidden="true"
+>
+
+  <section
+    class="instruction-note"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="note-title"
+  >
+
+    <button
+      type="button"
+      class="note-close"
+      id="note-close"
+      aria-label="Close instructions"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="note-title">Instructions</h2>
+
+    <p id="note-content">
+      Medication instructions will be displayed here.
+    </p>
+
+  </section>
+
+</div>
+
+<script src="/js/calendar.js"></script>
+
+  <script src="/js/kimuel-rules.js"></script>
+  <script src="/js/kimuel.js"></script>
+</body>
+</html>
