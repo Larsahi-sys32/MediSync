@@ -186,61 +186,203 @@
 
 
       <!-- WORKSPACE -->
-      <main class="workspace">
-        <div class="adherence-header">
-          <section class="headertx">
-            <h3 id="">
-              Medication Report
-            </h3>
-            <p>
-              showing reports from <!--selected period-->
-            </p>
-          </section>
+      
+<!-- WORKSPACE -->
+<main class="workspace adherence-workspace">
 
-          <div class="adherence-action-buttons">
-            <label class="period-selecttxt" for="report-period">
-            Period
-            <span class="sr-only">Select report period</span>
-            <select id="report-period">
-              <option value="today">Today</option>
-              <option value="this-week">This Week</option>
-              <option value="this-month">This Month</option>
-              <option value="this-year">This Year</option>
-              <option value="all-time">All Time</option>
-            </select>
-          </label>
+  <div class="adherence-page-content">
 
-            <button type="button" id="exportbtn">
-              <i class="fa-solid fa-file-export"></i>
-              Export
-            </button>
-          </div>
+    <!-- REPORT HEADER -->
+    <div class="adherence-header">
+
+      <section class="headertx">
+        <h3>Medication Report</h3>
+        <p id="report-date-range">Showing reports from this week</p>
+      </section>
+
+      <div class="adherence-action-buttons">
+
+        <label class="period-selecttxt" for="report-period">
+          Period
+
+          <select id="report-period">
+            <option value="today">Today</option>
+            <option value="this-week" selected>This Week</option>
+            <option value="this-month">This Month</option>
+            <option value="this-year">This Year</option>
+            <option value="all-time">All Time</option>
+          </select>
+        </label>
+
+        <button type="button" id="exportbtn">
+          <i class="fa-solid fa-download"></i>
+          Export
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- REPORT CARDS -->
+    <div class="report-cards-container">
+
+      <!-- ADHERENCE RATE -->
+      <article class="report-card"
+                      data-history-filter="all"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View all doses">
+        <span class="report-card-label">Adherence Rate</span>
+
+        <h2 class="report-card-value">85%</h2>
+
+        <div class="adherence-progress">
+          <div class="adherence-progress-fill" style="width: 85%"></div>
         </div>
 
-        <div class="adherence-content">
-          <div class="report-cards-container">
-            <!--adherence report cards here-->
-            <!--2x2 grid of cards similar to dashboard cards-->
-          </div>
-          <div class="dose-history-container">
-            <!--recent dose history-->
-            <div class="dose-history-header">
-              <h3>Recent Dose History</h3>
-              <button class="rdh-overlay-opener">
-                View All <!--opens a overlay with dim bg-->
-              </button>
+        <p class="report-card-description">
+          Doses taken on schedule
+        </p>
+      </article>
+
+
+      <!-- TAKEN -->
+      <article class="report-card"
+                      data-history-filter="taken"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View taken doses">
+        <span class="report-card-label">Taken</span>
+
+        <h2 class="report-card-value">17</h2>
+
+        <p class="report-card-description">
+          Recorded doses
+        </p>
+      </article>
+
+
+      <!-- MISSED -->
+      <article class="report-card"
+                      data-history-filter="missed"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View missed doses">
+        <span class="report-card-label">Missed</span>
+
+        <h2 class="report-card-value missed-value">2</h2>
+
+        <p class="report-card-description">
+          Uncompleted doses
+        </p>
+      </article>
+
+
+      <!-- LATE -->
+      <article class="report-card"
+                      data-history-filter="late"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View late doses">
+        <span class="report-card-label">Late</span>
+
+        <h2 class="report-card-value late-value">1</h2>
+
+        <p class="report-card-description">
+          Taken later than scheduled
+        </p>
+      </article>
+
+    </div>
+
+
+    <!-- RECENT DOSE HISTORY -->
+    <section class="dose-history-container">
+
+      <div class="dose-history-header">
+        <h3>Recent Dose History</h3>
+
+        <button
+          type="button"
+          class="rdh-overlay-opener"
+          id="view-all-history"
+        >
+          View all <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="dose-history-list" id="dose-history-list">
+
+        <!-- HISTORY ROW 1 -->
+        <div class="dose-history-row" data-status="taken">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin C</span>
+              <span class="dose-time">8:00 AM • 1 min ago</span>
             </div>
-            <div class="dose-history-row">
-              <div class="his-left-side">
-                <!--date, med_img, med_name, time_recorded-->
-              </div>
-              <div class="his-right-side">
-                <!--profile icon (if its recorded by someone else), status containter (taken,missed,late)-->
-              </div>
-            </div>
           </div>
+
+          <div class="his-right-side">
+            <span class="dose-status taken-status">Taken</span>
+          </div>
+
         </div>
-      </main>
+
+
+        <!-- HISTORY ROW 2 -->
+        <div class="dose-history-row" data-status="missed">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin B</span>
+              <span class="dose-time">8:00 PM • 12 hrs ago</span>
+            </div>
+          </div>
+
+          <div class="his-right-side">
+            <span class="dose-status missed-status">Missed</span>
+          </div>
+
+        </div>
+
+
+        <!-- HISTORY ROW 3 -->
+        <div class="dose-history-row" data-status="late">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin D</span>
+              <span class="dose-time">2:00 PM • 1 day ago</span>
+            </div>
+          </div>
+
+          <div class="his-right-side">
+
+            <span class="recorded-by">
+              recorded by MJ Fenol
+            </span>
+
+            <span class="dose-status late-status">Late</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
 
     </div>
 
@@ -264,6 +406,7 @@
       });
     });
   </script>
+  <script src="/js/adherence.js" defer></script>
 
 </body>
 </html>

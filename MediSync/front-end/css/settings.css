@@ -41,8 +41,6 @@
   border-bottom-left-radius: 10px;
 }
 
-
-
 .settings-nav-bar a,
 .settings-nav-bar .pfp-select {
   display: grid;
@@ -55,6 +53,7 @@
 
   background: transparent;
   border: 1px solid transparent;
+  border-right: none;
   color: var(--navy);
 
   font-size: var(--text-xl);
@@ -78,11 +77,15 @@
 
 .settings-nav-bar a.active {
   position: relative;
+  z-index: 10;
+  
+  width: calc(100% + 1px);
+  margin-right: -1px;
+
   background: #FFFFFF;
   border: 1px solid rgba(30, 30, 30, 0.35);
-  box-shadow: inset 10px 0 0 0 rgb(255, 255, 255);
+  border-right: none;
 }
-
 /* ========================================
    SETTINGS SECTIONS
 ======================================== */

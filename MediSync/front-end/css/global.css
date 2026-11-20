@@ -304,7 +304,6 @@ button {
   align-items: center;
 
   width: 100%;
-  min-height: 90px;
 
   padding: 12px 20px;
   gap: 16px;
@@ -313,7 +312,6 @@ button {
   border-bottom: 1px solid #000000;
 
   font-family: "Manrope", sans-serif;
-  font-size: var(--text-xl);
   color: var(--text-dark);
 }
 
@@ -326,14 +324,6 @@ button {
 .dropdown-current-profile > i {
   font-size: var(--text-base);
 }
-
-.profile-avatar.large {
-  width: 64px;
-  height: 64px;
-
-  font-size: 44px;
-}
-
 /* DROPDOWN CONTENT */
 
 .dropdown-content {
@@ -364,7 +354,6 @@ button {
   border: 0;
 
   font-family: "Manrope", sans-serif;
-  font-size: var(--text-lg);
   text-align: left;
 
   color: var(--text-dark);
@@ -388,13 +377,10 @@ button {
 
   flex: 0 0 auto;
 
-  width: 48px;
-  height: 48px;
+
 
   border: 2px solid #000000;
   border-radius: 50%;
-
-  font-size: var(--text-lg);
 }
 
 /* ========================================

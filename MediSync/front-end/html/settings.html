@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-font-size="medium">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
   <link rel="stylesheet" href="/front-end/css/global.css">
-  <link rel="stylesheet" href="/front-end/css/profile.css">
+  <link rel="stylesheet" href="/front-end/css/settings.css">
 </head>
 
 <body>
@@ -127,7 +127,7 @@
          <!-- Navigation Bar -->
         <nav class="settings-nav-bar">
           <button class="pfp-select">
-            <i class="fa-solid fa-circle-user"></i>
+            <i class="fa-solid fa-circle-user" style="font-size: 36px;"></i>
           </button>
 
           <a href="#perso-info">
@@ -151,8 +151,10 @@
         </nav>
 
         <!-- Page Sections -->
+        <div class="settings-content">
+
         <section id="perso-info">
-          <h1>Personal Information</h1>
+          <h1 style="padding-top: 15px;">Personal Information</h1>
           <p></p>
 
           <div class="settings-row">
@@ -275,7 +277,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Two-Factor Authentication</h2>
-              <p class="subtitle">Add an extra layer of security to your account<p>
+              <p class="subtitle">Add an extra layer of security to your account</p>
             </div>
 
             <button class="rs-action-button">
@@ -286,7 +288,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Permissions</h2>
-              <p class="subtitle">Manage what the app can access<p>
+              <p class="subtitle">Manage what the app can access</p>
             </div>
 
             <button class="rs-action-button">
@@ -297,7 +299,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Delete Account</h2>
-              <p class="subtitle">Remove your account permanently<p>
+              <p class="subtitle">Remove your account permanently</p>
             </div>
 
             <button class="rs-action-button">
@@ -313,7 +315,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Text Size</h2>
-              <p class="subtitle">Adjust text size to your liking<p>
+              <p class="subtitle">Adjust text size to your liking</p>
             </div>
 
             <div class="rs-action-toggle-group" role="radiogroup" aria-label="Theme selection">
@@ -333,21 +335,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Dark Mode</h2>
-              <p class="subtitle">Make the screen easier on your eyes<p>
-            </div>
-
-            <button class="rs-action-button">
-              <label class="switch">
-                <input type="checkbox" role="switch">
-                <span class="slider"></span>
-              </label>
-            </button>
-          </div>
-
-          <div class="settings-row">
-            <div class="settings-text-group">
-              <h2 class="title">Voice Reminders</h2>
-              <p class="subtitle">Receive reminders through voice alerts<p>
+              <p class="subtitle">Make the screen easier on your eyes</p>
             </div>
 
             <button class="rs-action-button">
@@ -361,7 +349,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Reduce Animations</h2>
-              <p class="subtitle">Simplify movement and transitions<p>
+              <p class="subtitle">Simplify movement and transitions</p>
             </div>
 
             <button class="rs-action-button">
@@ -380,7 +368,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Manage profiles</h2>
-              <p class="subtitle">View and manage the people you care for<p>
+              <p class="subtitle">View and manage the people you care for</p>
             </div>
 
             <button class="rs-action-button">
@@ -391,7 +379,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Connection requests</h2>
-              <p class="subtitle">Manage requests to connect with other users<p>
+              <p class="subtitle">Manage requests to connect with other users</p>
             </div>
 
             <button class="rs-action-button">
@@ -402,7 +390,7 @@
           <div class="settings-row">
             <div class="settings-text-group">
               <h2 class="title">Access permissions</h2>
-              <p class="subtitle">Choose who can view and manage medication records<p>
+              <p class="subtitle">Choose who can view and manage medication records</p>
             </div>
 
             <button class="rs-action-button">
@@ -413,7 +401,7 @@
 
         <section id="bug-report">
           <h1>Report a Bug</h1>
-          <p>Experiencing a bug? Report us and help us improve our service.</p>
+          <p>Experiencing a bug? Report it and help us improve our service.</p>
 
            <form class="message-box" action="/submit" method="POST" enctype="multipart/form-data">
     
@@ -421,10 +409,13 @@
 
               <div class="action-row">
                 <!-- Label acts as the clickable button for the hidden file input -->
-                <label for="image-upload" class="attach-btn">
-                  Attach Image
-                </label>
-                <input type="file" id="image-upload" name="image" accept="image/*">
+                  <div class="attach-container">
+                    <label for="image-upload" class="attach-btn">
+                    Attach Image <i class="fa-solid fa-paperclip"></i>
+                  </label>
+                  <span id="file-name-text" class="file-name">No file chosen</span>
+                  <input type="file" id="image-upload" name="image-upload" accept="image/*" hidden>
+                  </div>
 
                 <button type="submit" class="submit-btn">Report</button>
               </div>
@@ -432,7 +423,7 @@
             </form>
 
         </section>
-
+        </div>
       </main>
 
     </div>
@@ -457,6 +448,6 @@
       });
     });
   </script>
-
+  <script src="/js/settings.js" defer></script>
 </body>
 </html>
