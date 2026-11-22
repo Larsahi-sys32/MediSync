@@ -19,6 +19,7 @@ namespace MediSyncApi.Controllers
             _context = context;
         }
 
+        // SIGNUP
         public record SignupRequest(string LoginId, string Password);
 
         [HttpPost("signup")]
@@ -64,7 +65,8 @@ namespace MediSyncApi.Controllers
             });
         }
 
-public record LoginRequest(string LoginId, string Password);
+        // LOGIN
+        public record LoginRequest(string LoginId, string Password);
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(
@@ -101,15 +103,18 @@ public record LoginRequest(string LoginId, string Password);
                 role = user.Role,
                 name = user.Name,
                 age = user.Age,
+                dateOfBirth = user.DateOfBirth,
                 emergencyContact = user.EmergencyContact,
                 photo = user.Photo
             });
         }
 
+        // PROFILE UPDATE
         public record ProfileRequest(
             string Role,
             string Name,
             int? Age,
+            DateTime? DateOfBirth,
             string EmergencyContact,
             string Photo
         );
@@ -123,20 +128,78 @@ public record LoginRequest(string LoginId, string Password);
 
             if (user == null)
             {
-                return NotFound(new { message = "Account not found." });
+                return NotFound(new
+                {
+                    message = "Account not found."
+                });
             }
 
             user.Role = request.Role;
             user.Name = request.Name;
             user.Age = request.Age;
+            user.DateOfBirth = request.DateOfBirth;
             user.EmergencyContact = request.EmergencyContact;
             user.Photo = request.Photo;
 
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Profile updated successfully." });
+            return Ok(new
+            {
+                message = "Profile updated successfully."
+            });
         }
 
+        // EMAIL UPDATE
+        public record UpdateEmailRequest(string Email);
+
+        [HttpPut("email/{id}")]
+        public async Task<IActionResult> UpdateEmail(
+            int id,
+            [FromBody] UpdateEmailRequest request)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new
+                {
+                    message = "Account not found."
+                });
+            }
+
+            var newEmail = request.Email.Trim();
+
+            if (string.IsNullOrWhiteSpace(newEmail) ||
+                !newEmail.Contains("@") ||
+                !newEmail.Contains("."))
+            {
+                return BadRequest(new
+                {
+                    message = "Enter a valid email address."
+                });
+            }
+
+            var emailExists = await _context.Users.AnyAsync(
+                u => u.LoginId.ToLower() == newEmail.ToLower()
+                     && u.Id != id);
+
+            if (emailExists)
+            {
+                return Conflict(new
+                {
+                    message = "This email is already being used by another account."
+                });
+            }
+
+            user.LoginId = newEmail;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Email updated successfully.",
+                loginId = user.LoginId
+            });
+        }
     }
 }
-

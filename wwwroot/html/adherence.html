@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediSync | Adherence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/adherence.css">
+</head>
+
+<body>
+
+  <div class="global-page">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+      <div class="topbar-logo">
+        <div class="brand">MediSync</div>
+      </div>
+
+      <div class="topbar-actions">
+
+        <!-- PROFILE SELECTOR -->
+        <details class="profile-selector" id="profile-selector">
+
+          <summary class="profile-selector-button">
+
+            <span class="profile-avatar">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <span class="selected-profile" id="selected-profile">
+              My Medications
+            </span>
+
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+
+          </summary>
+
+          <div class="profile-dropdown">
+
+            <div class="dropdown-current-profile">
+              <span class="profile-avatar large">
+                <i class="fa-solid fa-circle-user"></i>
+              </span>
+
+              <span id="dropdown-current-name">
+                My Medications
+              </span>
+
+              <i class="fa-solid fa-chevron-up"></i>
+            </div>
+
+            <div class="dropdown-content">
+
+              <h2>People I Care For</h2>
+
+              <button
+                class="connected-profile"
+                type="button"
+                data-profile="MJ Fenol"
+              >
+                <span class="profile-avatar connected-avatar">
+                  <i class="fa-solid fa-circle-user"></i>
+                </span>
+
+                <span>MJ Fenol</span>
+              </button>
+
+              <a
+                href="profile.html#people-i-care-for"
+                class="add-person"
+              >
+                <span class="add-person-icon">
+                  <i class="fa-solid fa-plus"></i>
+                </span>
+
+                <span>Add a Person</span>
+              </a>
+
+            </div>
+          </div>
+
+        </details>
+
+        <!-- NOTIFICATIONS -->
+        <button
+          class="notification-button"
+          type="button"
+          aria-label="Notifications"
+          title="Notifications"
+        >
+          <i class="fa-solid fa-bell"></i>
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- MAIN LAYOUT -->
+    <div class="global-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <nav class="sidebar-navigation" aria-label="Main navigation">
+
+          <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-house-medical"></i>
+            <span class="pagelink">Dashboard</span>
+          </a>
+
+          <a href="calendar.html" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="pagelink">Calendar</span>
+          </a>
+
+          <a href="medications.html" class="nav-link">
+            <i class="fa-solid fa-capsules"></i>
+            <span class="pagelink">Medications</span>
+          </a>
+
+          <a href="adherence.html" class="nav-link active">
+            <i class="fa-solid fa-file-waveform"></i>
+            <span class="pagelink">Adherence</span>
+          </a>
+
+          <a href="settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span class="pagelink">Settings</span>
+          </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR USER INFORMATION -->
+        <div class="sidebar-user">
+
+          <div class="sidebar-user-information">
+
+            <span class="sidebar-user-avatar">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <div class="sidebar-user-text">
+              <span class="sidebar-user-name">
+                User Name
+              </span>
+
+              <span class="sidebar-user-type">
+                User
+              </span>
+            </div>
+
+          </div>
+
+          <a
+            href="index.html"
+            class="logout-button"
+            aria-label="Log out"
+            title="Log out"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <!-- WORKSPACE -->
+      
+<!-- WORKSPACE -->
+<main class="workspace adherence-workspace">
+
+  <div class="adherence-page-content">
+
+    <!-- REPORT HEADER -->
+    <div class="adherence-header">
+
+      <section class="headertx">
+        <h3>Medication Report</h3>
+        <p id="report-date-range">Showing reports from this week</p>
+      </section>
+
+      <div class="adherence-action-buttons">
+
+        <label class="period-selecttxt" for="report-period">
+          Period
+
+          <select id="report-period">
+            <option value="today">Today</option>
+            <option value="this-week" selected>This Week</option>
+            <option value="this-month">This Month</option>
+            <option value="this-year">This Year</option>
+            <option value="all-time">All Time</option>
+          </select>
+        </label>
+
+        <button type="button" id="exportbtn">
+          <i class="fa-solid fa-download"></i>
+          Export
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- REPORT CARDS -->
+    <div class="report-cards-container">
+
+      <!-- ADHERENCE RATE -->
+      <article class="report-card"
+                      data-history-filter="all"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View all doses">
+        <span class="report-card-label">Adherence Rate</span>
+
+        <h2 class="report-card-value">85%</h2>
+
+        <div class="adherence-progress">
+          <div class="adherence-progress-fill" style="width: 85%"></div>
+        </div>
+
+        <p class="report-card-description">
+          Doses taken on schedule
+        </p>
+      </article>
+
+
+      <!-- TAKEN -->
+      <article class="report-card"
+                      data-history-filter="taken"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View taken doses">
+        <span class="report-card-label">Taken</span>
+
+        <h2 class="report-card-value">17</h2>
+
+        <p class="report-card-description">
+          Recorded doses
+        </p>
+      </article>
+
+
+      <!-- MISSED -->
+      <article class="report-card"
+                      data-history-filter="missed"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View missed doses">
+        <span class="report-card-label">Missed</span>
+
+        <h2 class="report-card-value missed-value">2</h2>
+
+        <p class="report-card-description">
+          Uncompleted doses
+        </p>
+      </article>
+
+
+      <!-- LATE -->
+      <article class="report-card"
+                      data-history-filter="late"
+                      tabindex="0"
+                      role="button"
+                      aria-label="View late doses">
+        <span class="report-card-label">Late</span>
+
+        <h2 class="report-card-value late-value">1</h2>
+
+        <p class="report-card-description">
+          Taken later than scheduled
+        </p>
+      </article>
+
+    </div>
+
+
+    <!-- RECENT DOSE HISTORY -->
+    <section class="dose-history-container">
+
+      <div class="dose-history-header">
+        <h3>Recent Dose History</h3>
+
+        <button
+          type="button"
+          class="rdh-overlay-opener"
+          id="view-all-history"
+        >
+          View all <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="dose-history-list" id="dose-history-list">
+
+        <!-- HISTORY ROW 1 -->
+        <div class="dose-history-row" data-status="taken">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin C</span>
+              <span class="dose-time">8:00 AM • 1 min ago</span>
+            </div>
+          </div>
+
+          <div class="his-right-side">
+            <span class="dose-status taken-status">Taken</span>
+          </div>
+
+        </div>
+
+
+        <!-- HISTORY ROW 2 -->
+        <div class="dose-history-row" data-status="missed">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin B</span>
+              <span class="dose-time">8:00 PM • 12 hrs ago</span>
+            </div>
+          </div>
+
+          <div class="his-right-side">
+            <span class="dose-status missed-status">Missed</span>
+          </div>
+
+        </div>
+
+
+        <!-- HISTORY ROW 3 -->
+        <div class="dose-history-row" data-status="late">
+
+          <div class="his-left-side">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            <div class="dose-history-information">
+              <span class="dose-med-name">Vitamin D</span>
+              <span class="dose-time">2:00 PM • 1 day ago</span>
+            </div>
+          </div>
+
+          <div class="his-right-side">
+
+            <span class="recorded-by">
+              recorded by MJ Fenol
+            </span>
+
+            <span class="dose-status late-status">Late</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFILE SELECTOR INTERACTION -->
+  <script>
+    const profileSelector = document.getElementById("profile-selector");
+    const selectedProfile = document.getElementById("selected-profile");
+    const dropdownCurrentName = document.getElementById("dropdown-current-name");
+
+    document.querySelectorAll(".connected-profile").forEach(profile => {
+      profile.addEventListener("click", () => {
+        const name = profile.dataset.profile;
+
+        selectedProfile.textContent = name;
+        dropdownCurrentName.textContent = name;
+
+        profileSelector.open = false;
+      });
+    });
+  </script>
+  <script src="/js/adherence.js" defer></script>
+
+</body>
+</html>

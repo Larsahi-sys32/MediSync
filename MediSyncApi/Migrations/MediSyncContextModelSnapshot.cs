@@ -87,6 +87,9 @@ namespace MediSyncApi.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EmergencyContact")
                         .IsRequired()
                         .HasColumnType("TEXT");

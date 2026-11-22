@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSync | Medications</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/medications.css">
+</head>
+
+<body>
+<div class="global-page">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="brand">MediSync</div>
+    </div>
+
+    <div class="topbar-actions">
+      <details class="profile-selector" id="profile-selector">
+        <summary class="profile-selector-button">
+          <span class="profile-avatar"><i class="fa-solid fa-circle-user"></i></span>
+          <span class="selected-profile" id="selected-profile">My Medications</span>
+          <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+        </summary>
+
+        <div class="profile-dropdown">
+          <div class="dropdown-current-profile">
+            <span class="profile-avatar large"><i class="fa-solid fa-circle-user"></i></span>
+            <span id="dropdown-current-name">My Medications</span>
+            <i class="fa-solid fa-chevron-up"></i>
+          </div>
+
+          <div class="dropdown-content">
+            <h2>People I Care For</h2>
+            <button class="connected-profile" type="button" data-profile="MJ Fenol">
+              <span class="profile-avatar connected-avatar"><i class="fa-solid fa-circle-user"></i></span>
+              <span>MJ Fenol</span>
+            </button>
+            <a href="profile.html#people-i-care-for" class="add-person">
+              <span class="add-person-icon"><i class="fa-solid fa-plus"></i></span>
+              <span>Add a Person</span>
+            </a>
+          </div>
+        </div>
+      </details>
+
+      <button class="notification-button" type="button" aria-label="Notifications" title="Notifications">
+        <i class="fa-solid fa-bell"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="global-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-navigation" aria-label="Main navigation">
+        <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-house-medical"></i>
+            <span class="pagelink">Dashboard</span>
+          </a>
+
+          <a href="calendar.html" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="pagelink">Calendar</span>
+          </a>
+
+          <a href="medications.html" class="nav-link active">
+            <i class="fa-solid fa-capsules"></i>
+            <span class="pagelink">Medications</span>
+          </a>
+
+          <a href="adherence.html" class="nav-link">
+            <i class="fa-solid fa-file-waveform"></i>
+            <span class="pagelink">Adherence</span>
+          </a>
+
+          <a href="settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span class="pagelink">Settings</span>
+          </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="sidebar-user-information">
+          <span class="sidebar-user-avatar"><i class="fa-solid fa-circle-user"></i></span>
+          <div class="sidebar-user-text">
+            <span class="sidebar-user-name">User Name</span>
+            <span class="sidebar-user-type">User</span>
+          </div>
+        </div>
+        <a href="index.html" class="logout-button" aria-label="Log out" title="Log out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- WORKSPACE -->
+    <main class="workspace medications-workspace">
+      <div class="medication-tabs" role="tablist" aria-label="Medication page sections">
+        <button class="medication-tab active" id="medlist-tab" type="button" role="tab"
+                aria-selected="true" aria-controls="medlist-panel" tabindex="0">
+          My Medications
+        </button>
+        <button class="medication-tab" id="addmed-tab" type="button" role="tab"
+                aria-selected="false" aria-controls="addmed-panel" tabindex="-1">
+          Add Medication
+        </button>
+      </div>
+
+      <!-- MEDICATION LIST -->
+      <section class="medication-panel" id="medlist-panel" role="tabpanel"
+               aria-labelledby="medlist-tab">
+        <div class="medication-toolbar">
+          <label class="medication-search" for="medication-search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" id="medication-search" placeholder="Search medication..." autocomplete="off">
+          </label>
+
+          <label class="filter-control" for="medication-filter">
+            <i class="fa-solid fa-filter" aria-hidden="true"></i>
+            <span class="sr-only">Filter medications</span>
+            <select id="medication-filter">
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="medication-header">
+          <h1>Your medication list</h1>
+          <span class="medication-total" id="medication-total">0 medications</span>
+        </div>
+
+        <div class="medication-list" id="medication-list" aria-live="polite">
+          <!-- Medication cards are rendered by medications.js -->
+        </div>
+
+        <div class="empty-medications" id="empty-medications">
+          <div class="empty-medications-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+          <h2>No medications added yet</h2>
+          <p>Your medications will appear here after you add them.</p>
+          <button class="empty-add-button" type="button" data-open-add>
+            <i class="fa-solid fa-plus"></i> Add Medication
+          </button>
+        </div>
+      </section>
+
+      <!-- ADD MEDICATION -->
+      <section class="medication-panel addmed-panel" id="addmed-panel" role="tabpanel"
+               aria-labelledby="addmed-tab" hidden>
+        <div class="addmed-form-container">
+          <form id="medication-form" novalidate>
+            <!-- STEP 1: MEDICATION INFORMATION -->
+            <section class="form-step active" data-step="0" aria-labelledby="step-title-1">
+              <header class="header-row">
+                <div>
+                  <h2 id="step-title-1">Medication Information<span class="required-mark">*</span></h2>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="step-arrow btn-prev" disabled aria-label="Previous step">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button type="button" class="step-arrow btn-next" aria-label="Next step">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </header>
+
+              <div class="form-fields">
+                <div class="form-group">
+                  <label for="medication-name">Medication Name <span>*</span></label>
+                  <input type="text" id="medication-name" name="medication_name"
+                         placeholder="e.g., Vitamin C" autocomplete="off" required>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="strength">Strength <span>*</span></label>
+                    <input type="text" id="strength" name="strength"
+                           placeholder="e.g., 500 mg" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="medication-form-type">Form <span>*</span></label>
+                    <select id="medication-form-type" name="form" required>
+                      <option value="">Select form</option>
+                      <option value="Tablet">Tablet</option>
+                      <option value="Capsule">Capsule</option>
+                      <option value="Liquid">Liquid</option>
+                      <option value="Syrup">Syrup</option>
+                      <option value="Drops">Drops</option>
+                      <option value="Inhaler">Inhaler</option>
+                      <option value="Injection">Injection</option>
+                      <option value="Cream">Cream</option>
+                      <option value="Ointment">Ointment</option>
+                      <option value="Patch">Patch</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="dose-amount">Dose Amount <span>*</span></label>
+                  <input type="text" id="dose-amount" name="dose_amount"
+                         placeholder="e.g., 1 Tablet" required>
+                  <small class="field-hint">Enter how much should be taken for each dose.</small>
+                </div>
+
+                <div class="form-group quantity-group" id="quantity-group">
+                  <label for="quantity-available">Quantity Available</label>
+                  <div class="input-with-unit">
+                    <input type="number" id="quantity-available" name="quantity_available"
+                           min="0" step="1" placeholder="e.g., 20" disabled>
+                    <span class="quantity-unit" id="quantity-unit">Select a countable form</span>
+                  </div>
+                  <small class="field-hint">For countable medicines, enter the number of units you currently have.</small>
+                </div>
+              </div>
+            </section>
+
+            <!-- STEP 2: SCHEDULE & FREQUENCY -->
+            <section class="form-step" data-step="1" aria-labelledby="step-title-2" hidden>
+              <header class="header-row">
+                <div>
+                  <p class="step-kicker">Step 2 of 4</p>
+                  <h2 id="step-title-2">Schedule &amp; Frequency<span class="required-mark">*</span></h2>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="step-arrow btn-prev" aria-label="Previous step">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button type="button" class="step-arrow btn-next" aria-label="Next step">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </header>
+
+              <div class="form-fields">
+                <fieldset class="form-group schedule-type-group">
+                  <legend>How is your medication scheduled? <span>*</span></legend>
+                  <div class="radio-row">
+                    <label class="radio-option">
+                      <input type="radio" name="schedule_type" value="daily" checked>
+                      <span>Daily Frequency</span>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="schedule_type" value="interval">
+                      <span>Hourly Interval</span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <div class="form-row schedule-choice-row">
+                  <div class="form-group" id="frequency-group">
+                    <label for="frequency">Frequency <span>*</span></label>
+                    <select id="frequency" name="frequency" required>
+                      <option value="">Select frequency</option>
+                      <option value="Once a day">Once a day</option>
+                      <option value="Twice a day">Twice a day</option>
+                      <option value="3 times a day">3 times a day</option>
+                      <option value="4 times a day">4 times a day</option>
+                      <option value="5 times a day">5 times a day</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group" id="interval-group" hidden>
+                    <label for="take-every">Take Every <span>*</span></label>
+                    <select id="take-every" name="take_every" disabled>
+                      <option value="">Select interval</option>
+                      <option value="4 hours">4 hours</option>
+                      <option value="6 hours">6 hours</option>
+                      <option value="8 hours">8 hours</option>
+                      <option value="12 hours">12 hours</option>
+                      <option value="24 hours">24 hours</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group reminder-group">
+                  <label>Reminder Time(s) <span>*</span></label>
+                  <div class="reminder-list" id="reminder-list">
+                    <div class="reminder-row">
+                      <input type="time" name="reminder_times[]" aria-label="Reminder time" required>
+                      <button type="button" class="remove-reminder" aria-label="Remove reminder" disabled>
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <button type="button" class="add-reminder" id="add-reminder">
+                    <i class="fa-solid fa-plus"></i> Add reminder time
+                  </button>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="start-date">Start Date <span>*</span></label>
+                    <input type="date" id="start-date" name="start_date" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="end-date">End Date <small>(Optional)</small></label>
+                    <input type="date" id="end-date" name="end_date">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- STEP 3: PRESCRIPTION & INSTRUCTIONS -->
+            <section class="form-step" data-step="2" aria-labelledby="step-title-3" hidden>
+              <header class="header-row">
+                <div>
+                  <p class="step-kicker">Step 3 of 4</p>
+                  <h2 id="step-title-3">Prescription &amp; Instructions</h2>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="step-arrow btn-prev" aria-label="Previous step">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button type="button" class="step-arrow btn-next" aria-label="Next step">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </header>
+
+              <div class="form-fields">
+                <div class="form-group">
+                  <label for="prescribing-doctor">Prescribing Doctor</label>
+                  <input type="text" id="prescribing-doctor" name="prescribing_doctor"
+                         placeholder="Enter doctor's name">
+                </div>
+                <div class="form-group">
+                  <label for="additional-instructions">Additional Instructions</label>
+                  <textarea id="additional-instructions" name="instructions" rows="4"
+                            placeholder="Enter instructions from your prescription..."></textarea>
+                </div>
+              </div>
+            </section>
+
+            <!-- STEP 4: MEDICATION IMAGE -->
+            <section class="form-step" data-step="3" aria-labelledby="step-title-4" hidden>
+              <header class="header-row">
+                <div>
+                  <p class="step-kicker">Step 4 of 4</p>
+                  <h2 id="step-title-4">Medication Image</h2>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="step-arrow btn-prev" aria-label="Previous step">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button type="button" class="step-arrow btn-next" disabled aria-label="Next step">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </header>
+
+              <div class="form-fields">
+                <div class="image-grid">
+                  <div class="preview-col" id="image-preview">
+                    <i class="fa-solid fa-prescription-bottle-medical" aria-hidden="true"></i>
+                    <span>Image preview</span>
+                  </div>
+
+                  <div class="image-options">
+                    <div class="presets-panel">
+                      <h3>History / Presets</h3>
+                      <div class="presets-row" role="group" aria-label="Choose a medication image">
+                        <button type="button" class="preset-item selected" data-preset="bottle" aria-pressed="true" aria-label="Bottle icon">
+                          <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        </button>
+                        <button type="button" class="preset-item" data-preset="tablet" aria-pressed="false" aria-label="Tablet icon">
+                          <i class="fa-solid fa-tablets"></i>
+                        </button>
+                        <button type="button" class="preset-item" data-preset="capsule" aria-pressed="false" aria-label="Capsule icon">
+                          <i class="fa-solid fa-capsules"></i>
+                        </button>
+                        <button type="button" class="preset-item" data-preset="pills" aria-pressed="false" aria-label="Pills icon">
+                          <i class="fa-solid fa-pills"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="upload-row">
+                      <label for="custom-image" class="btn-attach">
+                        Attach Image <i class="fa-solid fa-paperclip"></i>
+                      </label>
+                      <span id="file-name-text" class="file-name">No file chosen</span>
+                      <input type="file" id="custom-image" name="custom_image" accept="image/*" hidden>
+                    </div>
+                    <button type="button" class="remove-image" id="remove-image">Remove selected image</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- STEP INDICATOR -->
+            <div class="page-indicator" id="page-indicator" role="status" aria-label="Step 1 of 4">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+
+            <!-- FORM ACTIONS -->
+            <footer class="form-footer-actions">
+              <button type="button" class="draft-link-btn" id="open-drafts-btn">
+                <i class="fa-regular fa-file-lines"></i>
+                <span>Drafts (<span id="draft-count">0</span>)</span>
+              </button>
+
+              <div class="right-actions">
+                <button type="button" class="btn-cancel" id="cancel-btn">Cancel</button>
+                <button type="button" class="btn-draft" id="save-draft-btn">Save as Draft</button>
+                <button type="submit" class="btn-save">Save</button>
+              </div>
+            </footer>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- DRAFTS DIALOG -->
+<dialog class="drafts-modal" id="drafts-modal" aria-labelledby="drafts-title">
+  <div class="modal-header">
+    <div>
+      <h2 id="drafts-title">Saved Drafts</h2>
+    </div>
+    <button type="button" class="close-modal" id="close-modal-btn" aria-label="Close drafts">&times;</button>
+  </div>
+  <div class="draft-list" id="draft-list"></div>
+</dialog>
+
+<div class="medication-toast" id="medication-toast" role="status" aria-live="polite"></div>
+
+<script src="/js/medications.js"></script>
+</body>
+</html>

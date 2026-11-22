@@ -15,6 +15,8 @@ namespace MediSyncApi.Models
 
         public int? Age { get; set; }
 
+        public DateTime? DateOfBirth { get; set; }
+
         public string EmergencyContact { get; set; } = string.Empty;
 
         public string Photo { get; set; } = string.Empty;

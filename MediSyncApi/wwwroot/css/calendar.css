@@ -1,0 +1,988 @@
+
+/* ========================================
+   CALENDAR TABS
+   MATCH AUTHENTICATION PAGE DESIGN
+======================================== */
+
+.calendar-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  width: 90%;
+  min-height: 60px;
+
+  margin: 0 auto;
+  padding: 8px;
+  gap: 5px;
+
+  background: #EAEAEA;
+  border: 1px solid #999999;
+  border-radius: 16px;
+}
+
+.calendar-tab {
+  min-width: 0;
+  padding: 8px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 12px;
+
+  background: transparent;
+  color: #999999;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.calendar-tab.active {
+  background: #FBFAFA;
+  border-color: #AAAAAA;
+  color: #000000AA;
+}
+
+.calendar-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.calendar-tab:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   CALENDAR PANELS
+======================================== */
+
+.calendar-panel {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  width: 90%;
+  min-width: 0;
+  gap: 20px;
+}
+
+.calendar-panel[hidden] {
+  display: none !important;
+}
+
+/* ========================================
+   TODAY'S SCHEDULE
+======================================== */
+
+#today-panel .workspace-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 auto;
+  gap: 20px;
+}
+
+/* VIEW HEADING */
+
+.view-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  gap: 12px;
+}
+
+.view-heading h1 {
+  margin: 0;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: 1.35;
+
+  color: var(--text-dark);
+}
+
+.view-heading p {
+  margin: 4px 0 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-sm);
+
+  color: var(--text-muted);
+}
+
+.schedule-count {
+  padding: 7px 12px;
+
+  background: #EAF1F7;
+  border-radius: 20px;
+
+  color: var(--navy);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+/* ========================================
+   MEDICATION LIST
+======================================== */
+
+.medication-list {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  gap: 20px;
+}
+
+.medication-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+
+  align-items: center;
+
+  min-height: 90px;
+
+  padding: 14px 18px;
+  gap: 16px;
+
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: 9px;
+
+  transition: border-color 0.2s ease;
+}
+
+.medication-row.taken {
+  border-color: #85AFD2;
+}
+
+.medication-time {
+  font-family: "Poppins", sans-serif;
+  font-size: var(--text-xl);
+  white-space: nowrap;
+  color: var(--text-dark);
+}
+
+.medication-information {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  gap: 3px;
+  
+}
+
+.medication-information h3 {
+  margin: 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.medication-information p {
+  margin: 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.medication-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+/* ========================================
+   NOTIFICATION SWITCH
+======================================== */
+
+.notification-control {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.notification-label {
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.notification-switch {
+  position: relative;
+
+  display: inline-block;
+  flex: 0 0 auto;
+
+  width: 43px;
+  height: 24px;
+}
+
+.notification-switch input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  inset: 0;
+
+  background: #B8B8B8;
+  border: 1px solid #929292;
+  border-radius: 30px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.switch-slider::before {
+  content: "";
+
+  position: absolute;
+  top: 2px;
+  left: 2px;
+
+  width: 18px;
+  height: 18px;
+
+  background: #FFFFFF;
+  border-radius: 50%;
+
+  transition: 0.2s ease;
+}
+
+.notification-switch input:checked + .switch-slider {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.notification-switch input:checked + .switch-slider::before {
+  transform: translateX(19px);
+}
+
+.notification-switch input:focus-visible + .switch-slider {
+  outline: 2px solid var(--light-blue);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   MEDICATION ACTION BUTTONS
+======================================== */
+
+.medication-action-button {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid var(--navy);
+  border-radius: 5px;
+
+  background: #FFFFFF;
+  color: var(--navy);
+
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.medication-action-button:hover {
+  background: #EAF1F7;
+}
+
+.medication-status-button {
+  min-width: 94px;
+  min-height: 36px;
+
+  padding: 7px 12px;
+
+  border: 1px solid #AFAFAF;
+  border-radius: 5px;
+
+  background: #EAEAEA;
+  color: #666666;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-xs);
+
+  cursor: pointer;
+}
+
+.medication-status-button.taken {
+  background: #C4D9EA;
+  border-color: #85AFD2;
+  color: var(--navy);
+}
+
+.medication-status-button:disabled {
+  cursor: default;
+}
+
+/* ========================================
+   EMPTY SCHEDULE
+======================================== */
+
+.empty-schedule {
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 55px 20px;
+
+  text-align: center;
+
+  background: #F5F7F9;
+  border: 1px dashed #B7C7D4;
+  border-radius: 10px;
+}
+
+.empty-schedule i {
+  font-size: 35px;
+  color: var(--navy);
+}
+
+.empty-schedule h2 {
+  margin: 14px 0 6px;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-lg);
+}
+
+.empty-schedule p {
+  margin: 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ========================================
+   MONTHLY CALENDAR HEADER
+======================================== */
+#month-panel {
+    border: 1px solid #999999;
+    border-radius: 10px;
+    min-height: clamp(420px, 65dvh, 580px);
+    padding: 20px 10px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: none;
+
+  margin: 0 auto 12px;
+  gap: 12px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 400;
+
+  color: var(--text-dark);
+}
+
+.calendar-header button {
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid #D2D2D2;
+  border-radius: 50%;
+
+  background: #FFFFFF;
+  color: var(--navy);
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.calendar-header button:hover {
+  background: #EAF1F7;
+}
+
+/* ========================================
+   MONTHLY CALENDAR GRID
+======================================== */
+
+#month-panel .calendar-weekdays,
+#month-panel .calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  min-width: none;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  gap: 5px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 2px;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.calendar-day {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 10px 2px;
+  margin: 2px 10%;
+
+  border: 1px solid #DCDCDC;
+  border-radius: 4px;
+
+  background: #FFFFFF;
+  color: var(--text-dark);
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-sm);
+
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.calendar-day:hover {
+  background: #EAF1F7;
+  border-color: var(--navy);
+}
+
+.calendar-day.other-month {
+  background: #F0F0F0;
+  color: #A6A6A6;
+  border-color: #E2E2E2;
+}
+
+.calendar-day.today {
+  outline: 1px solid var(--navy);
+  outline-offset: -2px;
+}
+
+.calendar-day.selected {
+  background: #C4D9EA;
+  border-color: #4579A3;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.calendar-day-number {
+  line-height: 1.2;
+}
+
+/* DATE STATUS INDICATORS */
+
+.calendar-day-indicators {
+  display: flex;
+  justify-content: center;
+
+  min-height: 6px;
+  margin-top: 4px;
+  gap: 3px;
+}
+
+.calendar-day-indicators i,
+.legend-dot {
+  display: inline-block;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+}
+
+.all-taken {
+  background: #1B4B72;
+}
+
+.partial {
+  background: #E28A00;
+}
+
+.missed {
+  background: #E32323;
+}
+
+.upcoming {
+  background: #85AFD2;
+}
+
+/* ========================================
+   CALENDAR LEGEND
+======================================== */
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin-top: 13px;
+  gap: 12px;
+}
+
+.calendar-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* ========================================
+   DATE PREVIEW
+======================================== */
+
+.date-preview {
+  position: relative;
+
+  width: 100%;
+  min-width: none;
+
+  margin: 0 auto;
+  padding: 15px 18px;
+
+  background: #EFF5FA;
+  border: 1px solid #B5C7D7;
+  border-radius: 9px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.date-preview[hidden] {
+  display: none !important;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.preview-header h2 {
+  margin: 0;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.preview-header button {
+  display: grid;
+  place-items: center;
+
+  width: 30px;
+  height: 30px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--navy);
+
+  cursor: pointer;
+}
+
+.preview-header button:hover {
+  background: rgba(27, 75, 114, 0.08);
+}
+
+.preview-medications {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-medication {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 0;
+  gap: 10px;
+
+  border-top: 1px solid #CCD7E0;
+}
+
+.preview-medication-time {
+  font-family: "Poppins", sans-serif;
+  font-size: var(--text-xl);
+  white-space: nowrap;
+}
+
+.preview-medication-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  min-width: 0;
+  gap: 2px;
+}
+
+.preview-medication-info strong {
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.preview-medication-info span {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.preview-empty {
+  
+  padding: 15px 0;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.medication-preview-status {
+  flex: 0 0 auto;
+
+  font-size: var(--text-xs);
+  color: var(--navy);
+  text-transform: capitalize;
+}
+
+/* ========================================
+   INSTRUCTIONS NOTE MODAL
+======================================== */
+
+.note-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.note-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.instruction-note {
+  position: relative;
+
+  width: 100%;
+  max-width: 480px;
+  min-height: 300px;
+
+  padding: 55px 38px 40px;
+
+  background: #FFF176;
+  color: #252525;
+
+  border: 1px solid #D3C54B;
+  border-radius: 2px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 48px) 0,
+    100% 48px,
+    100% 100%,
+    0 100%
+  );
+
+  transform: translateY(10px) scale(0.97);
+  transition: transform 0.2s ease;
+}
+
+.note-overlay.open .instruction-note {
+  transform: translateY(0) scale(1);
+}
+
+/* FOLDED CORNER */
+
+.instruction-note::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 48px;
+  height: 48px;
+
+  background: linear-gradient(
+    45deg,
+    transparent 48%,
+    rgba(0, 0, 0, 0.2) 49%,
+    #F5E66A 51%
+  );
+
+  pointer-events: none;
+}
+
+/* NOTE CONTENT */
+
+.instruction-note h2 {
+  margin: 0 0 22px;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-2xl);
+  font-weight: 500;
+}
+
+.instruction-note p {
+  margin: 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+/* CLOSE BUTTON */
+
+.note-close {
+  position: absolute;
+  top: 12px;
+  right: 55px;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  width: 32px;
+  height: 32px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.08);
+  color: #333333;
+
+  cursor: pointer;
+}
+
+.note-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* PREVENT BACKGROUND SCROLL */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+.calendar-day:focus-visible,
+.calendar-header button:focus-visible,
+.medication-action-button:focus-visible,
+.medication-status-button:focus-visible,
+.preview-header button:focus-visible,
+.note-close:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1100px) {
+
+  #today-panel .workspace-container,
+  .calendar-header,
+  #month-panel .calendar-weekdays,
+  #month-panel .calendar-grid,
+  .date-preview,
+  .empty-schedule {
+    max-width: 100%;
+  }
+
+  #month-panel .calendar-weekdays,
+  #month-panel .calendar-grid {
+    gap: 5px;
+  }
+  .medication-time{
+    font-size: var(--text-xl);
+  }
+  .calendar-day{
+    margin: 0;
+  }
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 760px) {
+
+  .calendar-tabs {
+    min-height: 48px;
+    padding: 6px;
+  }
+
+  .calendar-tab {
+    padding: 7px 4px;
+    font-size: var(--text-sm);
+  }
+
+  .view-heading {
+    align-items: flex-start;
+  }
+
+  .medication-row {
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    padding: 14px;
+  }
+    .medication-time{
+    font-size: var(--text-2xl);
+  }
+
+  .medication-actions {
+    justify-content: space-between;
+
+    width: 100%;
+    padding-top: 8px;
+  }
+
+  #month-panel .calendar-day {
+    min-height: 43px;
+  }
+
+  #month-panel .calendar-weekdays,
+  #month-panel .calendar-grid {
+    gap: 4px;
+  }
+
+  .preview-medication {
+    flex-wrap: wrap;
+  }
+
+  .preview-medication-info {
+    flex: 1;
+  }
+
+  .date-preview {
+    padding: 13px;
+  }
+
+  .calendar-legend {
+    gap: 8px;
+  }
+
+  .instruction-note {
+    min-height: 260px;
+    padding: 48px 25px 30px;
+  }
+
+  .instruction-note h2 {
+    font-size: var(--text-xl);
+  }
+
+  .instruction-note p {
+    font-size: var(--text-base);
+  }
+
+}
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+
+@media (max-width: 400px) {
+      .medication-row {
+        grid-template-columns: 120px 1fr;
+  }
+
+  #month-panel .calendar-day {
+    min-height: 37px;
+  }
+
+  #month-panel .calendar-weekdays,
+  #month-panel .calendar-grid {
+    gap: 3px;
+  }
+
+  .calendar-legend {
+    gap: 7px;
+  }
+
+  .calendar-legend span {
+    font-size: 9px;
+  }
+
+  .schedule-count {
+    padding: 6px 8px;
+  }
+
+  .instruction-note {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}

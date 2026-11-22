@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediSync | Profile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+  <link rel="stylesheet" href="/front-end/css/global.css">
+  <link rel="stylesheet" href="/front-end/css/settings.css">
+</head>
+
+<body>
+
+  <div class="global-page">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+      <div class="topbar-logo">
+        <div class="brand">MediSync</div>
+      </div>
+
+      <div class="topbar-actions">   
+
+        <!-- NOTIFICATIONS -->
+        <button
+          class="notification-button"
+          type="button"
+          aria-label="Notifications"
+          title="Notifications"
+        >
+          <i class="fa-solid fa-bell"></i>
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- MAIN LAYOUT -->
+    <div class="global-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <nav class="sidebar-navigation" aria-label="Main navigation">
+
+          <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-house-medical"></i>
+            <span class="pagelink">Dashboard</span>
+          </a>
+
+          <a href="calendar.html" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="pagelink">Calendar</span>
+          </a>
+
+          <a href="medications.html" class="nav-link">
+            <i class="fa-solid fa-capsules"></i>
+            <span class="pagelink">Medications</span>
+          </a>
+
+          <a href="adherence.html" class="nav-link">
+            <i class="fa-solid fa-file-waveform"></i>
+            <span class="pagelink">Adherence</span>
+          </a>
+
+          <a href="settings.html" class="nav-link active">
+            <i class="fa-solid fa-gear"></i>
+            <span class="pagelink">Settings</span>
+          </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR USER INFORMATION -->
+        <div class="sidebar-user">
+
+          <div class="sidebar-user-information">
+
+            <span class="sidebar-user-avatar">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+
+            <div class="sidebar-user-text">
+              <span class="sidebar-user-name">
+                User Name
+              </span>
+
+              <span class="sidebar-user-type">
+                User
+              </span>
+            </div>
+
+          </div>
+
+          <a
+            href="index.html"
+            class="logout-button"
+            aria-label="Log out"
+            title="Log out"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <!-- WORKSPACE -->
+      <main class="workspace">
+         <!-- Navigation Bar -->
+        <nav class="settings-nav-bar">
+          <button class="pfp-select">
+            <i class="fa-solid fa-circle-user" style="font-size: 36px;"></i>
+          </button>
+
+          <a href="#perso-info">
+            <i class="fa-solid fa-user-gear"></i>
+          </a>
+          <a href="#notifs">
+            <i class="fa-solid fa-bell"></i>
+          </a>
+          <a href="#priv-sec">
+            <i class="fa-solid fa-shield-virus"></i>
+          </a>
+          <a href="#access">
+            <i class="fa-solid fa-universal-access"></i>
+          </a>
+          <a href="#picf">
+            <i class="fa-solid fa-people-group"></i>
+          </a>
+          <a href="#bug-report">
+            <i class="fa-solid fa-virus"></i>
+          </a>
+        </nav>
+
+        <!-- Page Sections -->
+        <div class="settings-content">
+
+        <section id="perso-info">
+          <h1 style="padding-top: 15px;">Personal Information</h1>
+          <p></p>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <p class="subtitle">Full Name</p>
+              <h2 class="pi-value"><!--value here--></h2>
+            </div>
+            <button class="rs-action-button">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <p class="subtitle">Email Address</p>
+              <h2 class="pi-value"><!--value here--></h2>
+            </div>
+            <button class="rs-action-button">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <p class="subtitle">Date of Birth</p>
+              <h2 class="pi-value"><!--value here--></h2>
+            </div>
+            <button class="rs-action-button">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <p class="subtitle">Phone Number</p>
+              <h2 class="pi-value"><!--value here--></h2>
+            </div>
+            <button class="rs-action-button">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+        </section>
+
+        <section id="notifs">
+          <h1>Notifications</h1>
+          <p></p>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Medication reminders</h2>
+              <p class="subtitle">Receive dose alerts</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Missed-dose alerts</h2>
+              <p class="subtitle">Get notified about missed dose</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Refill reminders</h2>
+              <p class="subtitle">Know when supplies run low</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Connection requests</h2>
+              <p class="subtitle">Get notified when someone wants to connect</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+        </section>
+
+        <section id="priv-sec">
+          <h1>Privacy & Security</h1>
+          <p></p>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Change Password</h2>
+              <p class="subtitle">Keep your account secure with a new password</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Two-Factor Authentication</h2>
+              <p class="subtitle">Add an extra layer of security to your account</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Permissions</h2>
+              <p class="subtitle">Manage what the app can access</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Delete Account</h2>
+              <p class="subtitle">Remove your account permanently</p>
+            </div>
+
+            <button class="rs-action-button">
+              Delete
+            </button>
+          </div>
+        </section>
+
+        <section id="access">
+          <h1>Accessibility</h1>
+          <p></p>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Text Size</h2>
+              <p class="subtitle">Adjust text size to your liking</p>
+            </div>
+
+            <div class="rs-action-toggle-group" role="radiogroup" aria-label="Theme selection">
+              <input type="radio" id="opt-1" name="three-way" value="small">
+              <label for="opt-1">Small</label>
+
+              <input type="radio" id="opt-2" name="three-way" value="medium" checked>
+              <label for="opt-2">Medium</label>
+
+              <input type="radio" id="opt-3" name="three-way" value="large">
+              <label for="opt-3">Large</label>
+
+              <span class="slider"></span>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Dark Mode</h2>
+              <p class="subtitle">Make the screen easier on your eyes</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Reduce Animations</h2>
+              <p class="subtitle">Simplify movement and transitions</p>
+            </div>
+
+            <button class="rs-action-button">
+              <label class="switch">
+                <input type="checkbox" role="switch">
+                <span class="slider"></span>
+              </label>
+            </button>
+          </div>
+        </section>
+
+        <section id="picf">
+          <h1>People I Care For</h1>
+          <p></p>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Manage profiles</h2>
+              <p class="subtitle">View and manage the people you care for</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Connection requests</h2>
+              <p class="subtitle">Manage requests to connect with other users</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-text-group">
+              <h2 class="title">Access permissions</h2>
+              <p class="subtitle">Choose who can view and manage medication records</p>
+            </div>
+
+            <button class="rs-action-button">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <section id="bug-report">
+          <h1>Report a Bug</h1>
+          <p>Experiencing a bug? Report it and help us improve our service.</p>
+
+           <form class="message-box" action="/submit" method="POST" enctype="multipart/form-data">
+    
+              <textarea name="message" rows="4" placeholder="type here..." required></textarea>
+
+              <div class="action-row">
+                <!-- Label acts as the clickable button for the hidden file input -->
+                  <div class="attach-container">
+                    <label for="image-upload" class="attach-btn">
+                    Attach Image <i class="fa-solid fa-paperclip"></i>
+                  </label>
+                  <span id="file-name-text" class="file-name">No file chosen</span>
+                  <input type="file" id="image-upload" name="image-upload" accept="image/*" hidden>
+                  </div>
+
+                <button type="submit" class="submit-btn">Report</button>
+              </div>
+
+            </form>
+
+        </section>
+        </div>
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFILE SELECTOR INTERACTION -->
+  <script>
+    const profileSelector = document.getElementById("profile-selector");
+    const selectedProfile = document.getElementById("selected-profile");
+    const dropdownCurrentName = document.getElementById("dropdown-current-name");
+
+    document.querySelectorAll(".connected-profile").forEach(profile => {
+      profile.addEventListener("click", () => {
+        const name = profile.dataset.profile;
+
+        selectedProfile.textContent = name;
+        dropdownCurrentName.textContent = name;
+
+        profileSelector.open = false;
+      });
+    });
+  </script>
+  <script src="/js/settings.js" defer></script>
+</body>
+</html>
