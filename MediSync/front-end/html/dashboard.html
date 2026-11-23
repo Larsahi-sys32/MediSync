@@ -97,13 +97,16 @@
 
         <!-- NOTIFICATIONS -->
         <button
-          class="notification-button"
-          type="button"
-          aria-label="Notifications"
-          title="Notifications"
-        >
-          <i class="fa-solid fa-bell"></i>
-        </button>
+  class="notification-button"
+  type="button"
+  id="notification-button"
+  aria-label="Notifications"
+  aria-expanded="false"
+  aria-controls="notifications-overlay"
+  title="Notifications"
+>
+  <i class="fa-solid fa-bell"></i>
+</button>
 
       </div>
 
@@ -349,24 +352,7 @@
 
   </div>
 
-
-  <!-- PROFILE SELECTOR INTERACTION -->
-  <script>
-    const profileSelector = document.getElementById("profile-selector");
-    const selectedProfile = document.getElementById("selected-profile");
-    const dropdownCurrentName = document.getElementById("dropdown-current-name");
-
-    document.querySelectorAll(".connected-profile").forEach(profile => {
-      profile.addEventListener("click", () => {
-        const name = profile.dataset.profile;
-
-        selectedProfile.textContent = name;
-        dropdownCurrentName.textContent = name;
-
-        profileSelector.open = false;
-      });
-    });
-  </script>
+<script src="/js/profile-selector.js"></script>
 
 </body>
 </html>

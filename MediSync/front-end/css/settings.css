@@ -312,7 +312,7 @@
 .message-box {
   display: flex;
   flex-direction: column;
-  width: min(100%, 720px);
+  min-width: 100%;
   margin: 28px auto 0;
   gap: 14px;
 }
@@ -329,12 +329,6 @@
   font: inherit;
 }
 
-.action-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 #image-upload {
   min-width: 0;
   flex: 1;
@@ -343,9 +337,6 @@
 
 .attach-btn,
 .submit-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   min-height: 40px;
   padding: 8px 16px;
   border: 1px solid var(--navy);
@@ -366,9 +357,6 @@
 }
 
 .attach-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   min-height: 36px;
   padding: 7px 12px;
   gap: 8px;
@@ -390,6 +378,8 @@
 }
 
 .submit-btn {
+  align-self: flex-end;
+  min-width: 120px;
   background: var(--navy);
   color: #FFFFFF;
 }
@@ -589,25 +579,6 @@
 ======================================== */
 
 @media (max-width: 760px) {
-  .workspace:has(.settings-nav-bar) {
-    grid-template-columns: 54px minmax(0, 1fr);
-    padding: 16px 12px 20px;
-  }
-
-  .settings-nav-bar {
-    width: 54px;
-  }
-
-  .settings-nav-bar a,
-  .settings-nav-bar .pfp-select {
-    min-height: 52px;
-    padding: 8px;
-    font-size: var(--text-base);
-  }
-
-  .settings-nav-bar .pfp-select {
-    min-height: 64px;
-  }
 
   .settings-content {
     padding-left: 14px;

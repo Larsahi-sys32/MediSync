@@ -74,22 +74,18 @@
               <button
                 class="connected-profile"
                 type="button"
-                data-profile="MJ Fenol"
+                data-profile="connusername"
               >
-                <span class="profile-avatar connected-avatar">
                   <i class="fa-solid fa-circle-user"></i>
-                </span>
 
-                <span>MJ Fenol</span>
+                <span>Connected user name</span>
               </button>
 
               <a
                 href="profile.html#people-i-care-for"
                 class="add-person"
               >
-                <span class="add-person-icon">
-                  <i class="fa-solid fa-plus"></i>
-                </span>
+                  <i class="fa-solid fa-circle-plus"></i>
 
                 <span>Add a Person</span>
               </a>
@@ -389,23 +385,7 @@
   </div>
 
 
-  <!-- PROFILE SELECTOR INTERACTION -->
-  <script>
-    const profileSelector = document.getElementById("profile-selector");
-    const selectedProfile = document.getElementById("selected-profile");
-    const dropdownCurrentName = document.getElementById("dropdown-current-name");
-
-    document.querySelectorAll(".connected-profile").forEach(profile => {
-      profile.addEventListener("click", () => {
-        const name = profile.dataset.profile;
-
-        selectedProfile.textContent = name;
-        dropdownCurrentName.textContent = name;
-
-        profileSelector.open = false;
-      });
-    });
-  </script>
+  <script src="/js/profile-selector.js"></script>
   <script src="/js/adherence.js" defer></script>
 
 </body>

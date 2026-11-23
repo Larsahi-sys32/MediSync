@@ -297,37 +297,68 @@ button {
    PROFILE DROPDOWN
 ======================================== */
 
-/* CURRENT PROFILE */
-
+/* CURRENT PROFILE HEADER */
 .dropdown-current-profile {
   display: flex;
   align-items: center;
 
   width: 100%;
+  min-height: 60px;
 
-  padding: 12px 20px;
-  gap: 16px;
+  padding: 8px 12px;
+  gap: 10px;
 
   background: #C4D9EA;
   border-bottom: 1px solid #000000;
 
-  font-family: "Manrope", sans-serif;
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
   color: var(--text-dark);
 }
 
+/* DROPDOWN AVATAR */
+.dropdown-current-profile .profile-avatar {
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  font-size: 28px;
+}
+
+/* DROPDOWN PROFILE NAME */
 .dropdown-current-profile > span:nth-child(2) {
   flex: 1;
   min-width: 0;
-  overflow-wrap: anywhere;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
 }
 
+/* DROPDOWN CHEVRON */
 .dropdown-current-profile > i {
-  font-size: var(--text-base);
+  flex: 0 0 auto;
+
+  font-size: 12px;
+  color: var(--text-dark);
 }
-/* DROPDOWN CONTENT */
+
+.dropdown-current-profile {
+  cursor: pointer;
+}
+
+/* ========================================
+   DROPDOWN CONTENT
+======================================== */
 
 .dropdown-content {
-  padding: 20px;
+  padding: 20px 12px;
 }
 
 .dropdown-content h2 {
@@ -339,48 +370,50 @@ button {
   line-height: 1.2;
 }
 
+/* CONNECTED PROFILE AND ADD PERSON */
 .connected-profile,
 .add-person {
   display: flex;
   align-items: center;
 
   width: 100%;
-  min-height: 64px;
+  min-height: 60px;
 
   padding: 8px 0;
-  gap: 16px;
+  gap: 10px;
 
   background: transparent;
   border: 0;
 
   font-family: "Manrope", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
   text-align: left;
 
   color: var(--text-dark);
   cursor: pointer;
 }
 
+/* MAKE BOTH DROPDOWN ICONS CONSISTENT */
+.connected-profile > i,
+.add-person > i {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  font-size: 28px;
+  color: var(--navy);
+}
+
+/* HOVER EFFECT */
 .connected-profile:hover,
 .add-person:hover {
   background: rgba(27, 75, 114, 0.07);
   border-radius: 12px;
-}
-
-.connected-avatar {
-  background: #E28A00;
-  color: #FFFFFF;
-}
-
-.add-person-icon {
-  display: grid;
-  place-items: center;
-
-  flex: 0 0 auto;
-
-
-
-  border: 2px solid #000000;
-  border-radius: 50%;
 }
 
 /* ========================================

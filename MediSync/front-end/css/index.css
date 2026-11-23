@@ -262,30 +262,32 @@ h1 {
 }
 
 /* ========================================
-   FORGOT PASSWORD
+   PASSWORD ACTIONS
 ======================================== */
 
-.forgot-password-row {
+.password-actions-row {
   display: none;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
 
-  margin: 20px 0;
+  margin: 2px auto 0 auto;
 
   font-family: "Inter", sans-serif;
   font-size: 14px;
 }
 
-.forgot-password-row a {
+.password-actions-row a {
   color: var(--auth-navy);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.forgot-password-row a:hover {
+.password-actions-row a:hover {
   opacity: 0.78;
 }
 
-body.login-mode .forgot-password-row {
+body.login-mode .password-actions-row {
   display: flex;
 }
 
@@ -297,7 +299,7 @@ body.login-mode .forgot-password-row {
   display: flex;
   justify-content: center;
 
-  margin: 20px 0;
+  margin: 2px 0 25px 0;
 }
 
 .terms-label {

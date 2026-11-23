@@ -405,9 +405,9 @@
 
            <form class="message-box" action="/submit" method="POST" enctype="multipart/form-data">
     
-              <textarea name="message" rows="4" placeholder="type here..." required></textarea>
+              <textarea name="message" rows="4" placeholder="What went wrong, and where?" required></textarea>
 
-              <div class="action-row">
+
                 <!-- Label acts as the clickable button for the hidden file input -->
                   <div class="attach-container">
                     <label for="image-upload" class="attach-btn">
@@ -418,7 +418,6 @@
                   </div>
 
                 <button type="submit" class="submit-btn">Report</button>
-              </div>
 
             </form>
 
@@ -430,24 +429,6 @@
 
   </div>
 
-
-  <!-- PROFILE SELECTOR INTERACTION -->
-  <script>
-    const profileSelector = document.getElementById("profile-selector");
-    const selectedProfile = document.getElementById("selected-profile");
-    const dropdownCurrentName = document.getElementById("dropdown-current-name");
-
-    document.querySelectorAll(".connected-profile").forEach(profile => {
-      profile.addEventListener("click", () => {
-        const name = profile.dataset.profile;
-
-        selectedProfile.textContent = name;
-        dropdownCurrentName.textContent = name;
-
-        profileSelector.open = false;
-      });
-    });
-  </script>
   <script src="/js/settings.js" defer></script>
 </body>
 </html>

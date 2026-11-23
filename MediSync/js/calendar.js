@@ -9,7 +9,7 @@ let medications = [
     name: "Test Medication",
     dose: "500 mg",
     time: "08:00 AM",
-    date: "2026-11-14",
+    date: "2026-11-22",
     instructions: "This is a test instruction.",
     notificationEnabled: true,
     status: "upcoming"
@@ -19,7 +19,7 @@ let medications = [
     name: "Second Test Medication",
     dose: "1 tablet",
     time: "01:00 PM",
-    date: "2026-11-14",
+    date: "2026-11-22",
     instructions: "Second test instruction.",
     notificationEnabled: false,
     status: "upcoming"

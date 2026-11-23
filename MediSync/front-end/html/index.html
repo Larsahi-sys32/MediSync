@@ -17,14 +17,14 @@
             style="
               background-image: url('/auth-topbar-background.png');
               border: none;
-              box-shadow: none;">
+              box-shadow: 0 12px 24px 8px rgba(255, 255, 255, 0.9);">
       <div class="topbar-logo">
         <div class="brand">MediSync</div>
       </div>
 
       <div class="topbar-actions">
-        <a class="admin-landing-button" href="admin.html" aria-label="Go to admin landing page" title="Admin">
-          <i class="fa-solid fa-user-gear" aria-hidden="true"></i>
+        <a class="admin-landing-button" href="admin.html" aria-label="Go to admin landing page" title="Admin Authentication">
+          <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
         </a>
       </div>
     </header>
@@ -78,7 +78,7 @@
               <p class="form-error" id="form-error" aria-live="polite"></p>
             
             </div>
-
+            
             <div class="terms-row">
               <label class="terms-label" for="terms">
                 <span>Agree with <a href="terms.html" target="_blank" rel="noopener">Terms and Services</a></span>
@@ -86,9 +86,16 @@
                 <span class="checkbox-ui" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
               </label>
             </div>
-              <div class="forgot-password-row">
-                <a href="#" id="forgot-password-link">Forgot Password?</a>
-              </div>
+
+            <div class="password-actions-row">
+              <label class="terms-label" for="rem">
+                <span>Remember me</span>
+                <input id="rem" name="rem" type="checkbox">
+                <span class="checkbox-ui"><i class="fa-solid fa-check"></i></span>
+              </label>
+              <a href="#" id="forgot-password-link">Forgot Password?</a>
+            </div>
+
             <button class="submit-button" id="submit-button" type="submit" disabled>Sign Up</button>
             
           </form>

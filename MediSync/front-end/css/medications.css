@@ -36,9 +36,9 @@
 }
 
 .medication-tab.active {
-  background: #FBFAFA;
-  border-color: #AAAAAA;
-  color: #000000;
+  background: #fbfafa;
+  border-color: #aaaaaa;
+  color: #000000aa;
 }
 
 .medication-tab:hover:not(.active) {

@@ -38,69 +38,63 @@
     <div class="topbar-actions">
 
       <!-- PROFILE SELECTOR -->
-      <details class="profile-selector" id="profile-selector">
+        <details class="profile-selector" id="profile-selector">
 
-        <summary class="profile-selector-button">
+          <summary class="profile-selector-button">
 
-          <span class="profile-avatar">
-            <i class="fa-solid fa-circle-user"></i>
-          </span>
-
-          <span class="selected-profile" id="selected-profile">
-            My Medications
-          </span>
-
-          <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
-
-        </summary>
-
-        <div class="profile-dropdown">
-
-          <div class="dropdown-current-profile">
-
-            <span class="profile-avatar large">
+            <span class="profile-avatar">
               <i class="fa-solid fa-circle-user"></i>
             </span>
 
-            <span id="dropdown-current-name">
+            <span class="selected-profile" id="selected-profile">
               My Medications
             </span>
 
-            <i class="fa-solid fa-chevron-up"></i>
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
 
-          </div>
+          </summary>
 
-          <div class="dropdown-content">
+          <div class="profile-dropdown">
 
-            <h2>People I Care For</h2>
-
-            <button
-              class="connected-profile"
-              type="button"
-              data-profile="MJ Fenol"
-            >
-              <span class="profile-avatar connected-avatar">
+            <div class="dropdown-current-profile">
+              <span class="profile-avatar large">
                 <i class="fa-solid fa-circle-user"></i>
               </span>
 
-              <span>MJ Fenol</span>
-            </button>
-
-            <a
-              href="profile.html#people-i-care-for"
-              class="add-person"
-            >
-              <span class="add-person-icon">
-                <i class="fa-solid fa-plus"></i>
+              <span id="dropdown-current-name">
+                My Medications
               </span>
 
-              <span>Add a Person</span>
-            </a>
+              <i class="fa-solid fa-chevron-up"></i>
+            </div>
 
+            <div class="dropdown-content">
+
+              <h2>People I Care For</h2>
+
+              <button
+                class="connected-profile"
+                type="button"
+                data-profile="connusername"
+              >
+                  <i class="fa-solid fa-circle-user"></i>
+
+                <span>Connected user name</span>
+              </button>
+
+              <a
+                href="profile.html#people-i-care-for"
+                class="add-person"
+              >
+                  <i class="fa-solid fa-circle-plus"></i>
+
+                <span>Add a Person</span>
+              </a>
+
+            </div>
           </div>
-        </div>
 
-      </details>
+        </details>
 
       <!-- NOTIFICATIONS -->
       <button
@@ -342,6 +336,7 @@
 
 </div>
 
+<script src="/js/profile-selector.js"></script>
 <script src="/js/calendar.js"></script>
 
 </body>
