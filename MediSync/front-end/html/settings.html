@@ -21,6 +21,365 @@
   >
   <link rel="stylesheet" href="/front-end/css/global.css">
   <link rel="stylesheet" href="/front-end/css/settings.css">
+
+  <style>
+/* ========================================
+   SETTINGS MODALS (scoped to the settings box)
+======================================== */
+
+.workspace:has(.settings-nav-bar) {
+  --box-pad-top: 28px;
+  --box-pad-right: 40px;
+  --box-pad-bottom: 24px;
+  --box-pad-left: 40px;
+  position: relative;
+}
+
+@media (max-width: 1100px) {
+  .workspace:has(.settings-nav-bar) {
+    --box-pad-top: 24px;
+    --box-pad-right: 24px;
+    --box-pad-bottom: 20px;
+    --box-pad-left: 24px;
+  }
+}
+
+/* The overlay matches the settings box exactly, so it never covers the topbar or sidebar */
+.settings-modal-overlay {
+  position: absolute;
+  inset: var(--box-pad-top) var(--box-pad-right) var(--box-pad-bottom) var(--box-pad-left);
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  background: rgba(30, 30, 30, 0.45);
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.settings-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.settings-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(480px, 100%);
+  max-height: 100%;
+  overflow: hidden;
+
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.settings-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 12px;
+  gap: 16px;
+}
+
+.settings-modal-header h2 {
+  margin: 0;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.settings-modal-header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.settings-modal-close {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.settings-modal-close:hover {
+  background: rgba(27, 75, 114, 0.08);
+}
+
+.settings-modal-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 8px 24px 16px;
+  overflow-y: auto;
+  gap: 14px;
+}
+
+.settings-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 24px 20px;
+  border-top: 1px solid rgba(30, 30, 30, 0.15);
+  gap: 10px;
+}
+
+.settings-modal-footer button {
+  min-height: 38px;
+  padding: 7px 18px;
+  border: 1px solid var(--navy);
+  border-radius: 100px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.settings-modal-secondary {
+  background: #FFFFFF;
+  color: var(--navy);
+}
+
+.settings-modal-primary {
+  background: var(--navy);
+  color: #FFFFFF;
+}
+
+.settings-modal-primary.is-danger {
+  background: #C62828;
+  border-color: #C62828;
+}
+
+.settings-modal-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-field label {
+  color: var(--text-dark);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.settings-field input[type="password"],
+.settings-field input[type="text"],
+.settings-field select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.4);
+  border-radius: 8px;
+  color: var(--text-dark);
+  font: inherit;
+}
+
+.settings-field input:focus,
+.settings-field select:focus {
+  outline: 2px solid rgba(27, 75, 114, 0.35);
+  outline-offset: 1px;
+}
+
+.settings-field.has-error input {
+  border-color: #C62828;
+}
+
+.settings-field-error,
+.settings-modal-error {
+  min-height: 1em;
+  margin: 0;
+  color: #C62828;
+  font-size: var(--text-xs);
+}
+
+.settings-modal-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.settings-modal-success {
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(46, 125, 50, 0.1);
+  border: 1px solid rgba(46, 125, 50, 0.35);
+  border-radius: 8px;
+  color: #1B5E20;
+  font-size: var(--text-sm);
+}
+
+.settings-modal-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settings-modal-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  gap: 12px;
+}
+
+.settings-modal-list-item + .settings-modal-list-item {
+  border-top: 1px solid rgba(30, 30, 30, 0.12);
+}
+
+.settings-modal-person {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.settings-modal-person > i {
+  color: var(--navy);
+  font-size: 32px;
+}
+
+.settings-modal-person strong {
+  display: block;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+}
+
+.settings-modal-person span {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.settings-modal-inline-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.settings-modal-inline-actions button,
+.settings-modal-link-button {
+  min-height: 34px;
+  padding: 5px 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--navy);
+  border-radius: 100px;
+  color: var(--navy);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.settings-modal-inline-actions .is-accept {
+  background: var(--navy);
+  color: #FFFFFF;
+}
+
+.settings-modal-inline-actions .is-remove {
+  border-color: #C62828;
+  color: #C62828;
+}
+
+.settings-modal-empty {
+  margin: 0;
+  padding: 18px 0;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.settings-modal-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settings-modal-toggle-row strong {
+  display: block;
+  color: var(--text-dark);
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+}
+
+.settings-modal-toggle-row span.hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.settings-modal-choice {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 10px;
+  border: 1px solid rgba(30, 30, 30, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.settings-modal-choice:has(input:checked) {
+  background: rgba(27, 75, 114, 0.08);
+  border-color: var(--navy);
+}
+
+@media (max-width: 760px) {
+  .settings-modal-overlay {
+    padding: 10px;
+  }
+
+  .settings-modal-header,
+  .settings-modal-body,
+  .settings-modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-modal-overlay {
+    transition: none;
+  }
+}
+
+.settings-modal-select {
+  min-height: 38px;
+  padding: 6px 10px;
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 30, 30, 0.4);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.settings-modal-choice .hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+  </style>
 </head>
 
 <body>
@@ -40,155 +399,11 @@
         <button
           class="notification-button"
           type="button"
-          id="notification-button"
           aria-label="Notifications"
-          aria-expanded="false"
-          aria-controls="notifications-overlay"
           title="Notifications"
         >
           <i class="fa-solid fa-bell"></i>
         </button>
-
-        <!-- ========================================
-            NOTIFICATIONS OVERLAY
-        ======================================== -->
-
-        <div
-          class="notifications-overlay"
-          id="notifications-overlay"
-          aria-hidden="true"
-        >
-          <section
-            class="notifications-panel"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="notifications-title"
-          >
-
-            <!-- NOTIFICATIONS HEADER -->
-            <header class="notifications-header">
-
-              <h2 id="notifications-title">
-                Notifications
-              </h2>
-
-              <i class="fa-solid fa-bell notifications-header-icon"></i>
-
-            </header>
-
-
-            <!-- NOTIFICATIONS CONTENT -->
-            <div class="notifications-content">
-
-              <!-- TODAY -->
-              <section class="notification-group">
-
-                <h3 class="notification-group-title">
-                  Today
-                </h3>
-
-                <!-- MEDICATION REMINDER -->
-                <article class="notification-item">
-
-                  <i class="fa-solid fa-clock-rotate-left notification-icon medication-notification"></i>
-
-                  <div class="notification-information">
-
-                    <h4>Medication Reminder</h4>
-
-                    <p>
-                      Medication_name to be taken 10 min...
-                    </p>
-
-                  </div>
-
-                  <span class="notification-time">
-                    7:50 AM
-                  </span>
-
-                </article>
-
-              </section>
-
-
-              <!-- EARLIER THIS WEEK -->
-              <section class="notification-group earlier-notifications">
-
-                <h3 class="notification-group-title">
-                  Earlier This Week
-                </h3>
-
-                <!-- MISSED DOSE -->
-                <article class="notification-item">
-
-                  <i class="fa-solid fa-circle-question notification-icon missed-dose-notification"></i>
-
-                  <div class="notification-information">
-
-                    <h4>Missed Dose</h4>
-
-                    <p>
-                      You missed your Medication A dose
-                    </p>
-
-                  </div>
-
-                  <span class="notification-time">
-                    1D ago
-                  </span>
-
-                </article>
-
-
-                <!-- REFILL REMINDER -->
-                <article class="notification-item">
-
-                  <i class="fa-solid fa-arrows-rotate notification-icon refill-notification"></i>
-
-                  <div class="notification-information">
-
-                    <h4>Refill Reminder</h4>
-
-                    <p>
-                      Your Medication C runs out in 10 days
-                    </p>
-
-                  </div>
-
-                  <span class="notification-time">
-                    5D ago
-                  </span>
-
-                </article>
-
-
-                <!-- CONNECTION REQUEST -->
-                <article class="notification-item">
-
-                  <i class="fa-solid fa-handshake notification-icon connection-notification"></i>
-
-                  <div class="notification-information">
-
-                    <h4>Connection Request</h4>
-
-                    <p>
-                      Marvin Gersalia wants to look over you
-                    </p>
-
-                  </div>
-
-                  <span class="notification-time">
-                    5D ago
-                  </span>
-
-                </article>
-
-              </section>
-
-            </div>
-
-          </section>
-        </div>
 
       </div>
 
@@ -574,6 +789,5 @@
   </div>
 
   <script src="/js/settings.js" defer></script>
-  <script src="/js/notifications.js"></script>
 </body>
 </html>
