@@ -140,11 +140,6 @@ button {
   width: 100%;
   height: var(--topbar-height);
 
-  background-image: url("/postlogin-topbar-background.png");
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-
   border: 1px solid #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -154,11 +149,14 @@ button {
 .topbar-logo {
   display: flex;
   align-items: center;
+  background-color: #1B4B72;
 
   width: var(--sidebar-width);
   height: 100%;
 
   padding: 0 30px;
+
+  flex: 0 0 var(--sidebar-width);
 }
 
 .brand {
@@ -178,6 +176,12 @@ button {
   align-items: center;
   justify-content: flex-end;
 
+  background-image: url("/cut-postlogin-topbar-bg.png");
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  width: 100%;
   height: 100%;
   padding: 0 30px;
   gap: 24px;
@@ -661,7 +665,6 @@ button {
 
   .topbar-logo {
     width: auto;
-    min-width: 0;
     padding: 0 15px;
   }
 
