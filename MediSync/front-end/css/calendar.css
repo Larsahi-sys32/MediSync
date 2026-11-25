@@ -134,7 +134,6 @@
 .medication-list {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   gap: 20px;
 }
@@ -142,13 +141,13 @@
 .medication-row {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-
   align-items: center;
 
-  min-height: 90px;
+  min-height: 120px;
+  width: 100%;
 
-  padding: 14px 18px;
-  gap: 16px;
+  padding: 18px 24px;
+  gap: 24px;
 
   background: var(--card-bg);
   border: 1px solid rgba(0, 0, 0, 0.22);
@@ -161,20 +160,24 @@
   border-color: #85AFD2;
 }
 
+/* MEDICATION TIME */
+
 .medication-time {
   font-family: "Poppins", sans-serif;
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.05em;
+  font-weight: 500;
   white-space: nowrap;
   color: var(--text-dark);
 }
 
+/* MEDICATION INFORMATION */
+
 .medication-information {
   display: flex;
   flex-direction: column;
-
   min-width: 0;
   gap: 3px;
-  
 }
 
 .medication-information h3 {
@@ -197,36 +200,57 @@
   color: var(--text-muted);
 }
 
+/* ========================================
+   MEDICATION ACTION CONTAINER
+======================================== */
+
 .medication-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
-  flex-wrap: wrap;
-  gap: 9px;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+
+  gap: 10px;
 }
 
 /* ========================================
-   NOTIFICATION SWITCH
+   NOTIFICATION CONTROL CONTAINER
 ======================================== */
 
 .notification-control {
   display: flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+
+  flex: 0 0 90px;
+  width: 90px;
+  height: 48px;
+
+  gap: 6px;
+
+  border: 1px solid #999999;
+  border-radius: 9px;
+  background: #FFFFFF;
 }
 
 .notification-label {
-  font-family: "Inter", sans-serif;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 29px;
+  color: var(--navy);
 }
+
+/* NOTIFICATION SWITCH */
 
 .notification-switch {
   position: relative;
 
   display: inline-block;
-  flex: 0 0 auto;
+  flex: 0 0 43px;
 
   width: 43px;
   height: 24px;
@@ -234,10 +258,8 @@
 
 .notification-switch input {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   opacity: 0;
 }
 
@@ -284,25 +306,24 @@
 }
 
 /* ========================================
-   MEDICATION ACTION BUTTONS
+   NOTE AND OTHER ICON BUTTONS
 ======================================== */
 
 .medication-action-button {
   display: grid;
   place-items: center;
 
-  flex: 0 0 auto;
+  flex: 0 0 50px;
+  width: 50px;
+  height: 48px;
 
-  width: 36px;
-  height: 36px;
-
-  border: 1px solid var(--navy);
-  border-radius: 5px;
+  border: 1px solid #999999;
+  border-radius: 9px;
 
   background: #FFFFFF;
   color: var(--navy);
 
-  font-size: 16px;
+  font-size: 25px;
   cursor: pointer;
 
   transition: background 0.2s ease;
@@ -312,22 +333,34 @@
   background: #EAF1F7;
 }
 
-.medication-status-button {
-  min-width: 94px;
-  min-height: 36px;
+/* ========================================
+   MARK AS TAKEN BUTTON
+======================================== */
 
-  padding: 7px 12px;
+.medication-status-button {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 130px;
+  width: 130px;
+  min-width: 130px;
+  height: 48px;
+
+  padding: 8px 12px;
 
   border: 1px solid #AFAFAF;
-  border-radius: 5px;
+  border-radius: 9px;
 
   background: #EAEAEA;
   color: #666666;
 
   font-family: "Inter", sans-serif;
-  font-size: var(--text-xs);
+  font-size: var(--text-base);
 
+  white-space: nowrap;
   cursor: pointer;
+
+  transition: background 0.2s ease;
 }
 
 .medication-status-button.taken {
@@ -344,29 +377,41 @@
    EMPTY SCHEDULE
 ======================================== */
 
+#today-panel .workspace-container {
+  min-height: 100%;
+}
+
 .empty-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
+  flex: 1;
 
-  margin: 0 auto;
-  padding: 55px 20px;
+  min-height: 260px;
+  padding: 35px 20px;
 
-  text-align: center;
-
-  background: #F5F7F9;
-  border: 1px dashed #B7C7D4;
+  border: 1px dashed rgba(27, 75, 114, 0.35);
   border-radius: 10px;
+
+  background: rgba(234, 241, 247, 0.3);
+  text-align: center;
 }
 
 .empty-schedule i {
-  font-size: 35px;
+  margin-bottom: 12px;
+  border-radius: 50%;
   color: var(--navy);
+  font-size: 28px;
 }
 
 .empty-schedule h2 {
-  margin: 14px 0 6px;
-
+  margin: 0 0 7px;
   font-family: "Manrope", sans-serif;
   font-size: var(--text-lg);
+  font-weight: 600;
 }
 
 .empty-schedule p {
@@ -392,7 +437,6 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-width: none;
 
   margin: 0 auto 12px;
   gap: 12px;
@@ -435,7 +479,6 @@
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   width: 100%;
-  min-width: none;
 
   margin-left: auto;
   margin-right: auto;
@@ -578,22 +621,6 @@
    DATE PREVIEW
 ======================================== */
 
-.date-preview {
-  position: relative;
-
-  width: 100%;
-  min-width: none;
-
-  margin: 0 auto;
-  padding: 15px 18px;
-
-  background: #EFF5FA;
-  border: 1px solid #B5C7D7;
-  border-radius: 9px;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
 .date-preview[hidden] {
   display: none !important;
 }
@@ -690,6 +717,161 @@
   font-size: var(--text-xs);
   color: var(--navy);
   text-transform: capitalize;
+}
+
+/* ========================================
+   DATE HOVER PREVIEW
+======================================== */
+
+.date-hover-preview {
+  position: fixed;
+  z-index: 900;
+
+  width: 300px;
+  max-width: calc(100vw - 24px);
+
+  padding: 14px 16px;
+
+  background: #EFF5FA;
+  border: 1px solid #B5C7D7;
+  border-radius: 9px;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.15s ease;
+}
+
+.date-hover-preview.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.date-hover-preview h3 {
+  margin: 0 0 10px;
+
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.date-hover-preview .preview-medication {
+  padding: 8px 0;
+}
+
+.date-hover-preview .preview-medication-time {
+  font-size: var(--text-sm);
+}
+
+/* ========================================
+   DATE PREVIEW MODAL
+======================================== */
+
+.date-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.date-preview-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.date-preview-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+
+  overflow-y: auto;
+
+  padding: 25px;
+
+  background: #EFF5FA;
+  border: 1px solid #B5C7D7;
+  border-radius: 12px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+
+  transform: translateY(10px) scale(0.97);
+  transition: transform 0.2s ease;
+}
+
+.date-preview-overlay.open .date-preview-modal {
+  transform: translateY(0) scale(1);
+}
+
+.date-preview-modal .preview-header {
+  margin-bottom: 15px;
+}
+
+.date-preview-modal .preview-header h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.date-preview-modal .preview-medication {
+  border-top: 1px solid #CCD7E0;
+}
+
+.date-preview-modal #close-date-preview {
+  display: grid;
+  place-items: center;
+
+  width: 32px;
+  height: 32px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--navy);
+
+  cursor: pointer;
+}
+
+.date-preview-modal #close-date-preview:hover {
+  background: rgba(27, 75, 114, 0.08);
+}
+
+.date-preview-modal .preview-empty {
+  padding: 20px 0;
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+  .date-preview-modal {
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .date-hover-preview {
+    display: none;
+  }
 }
 
 /* ========================================
@@ -871,6 +1053,20 @@ body.modal-open {
   .calendar-day{
     margin: 0;
   }
+    .medication-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 10px 14px;
+    padding: 14px;
+  }
+
+  .medication-actions {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    justify-content: flex-end;
+
+    padding-top: 4px;
+  }
 }
 
 /* ========================================
@@ -945,6 +1141,34 @@ body.modal-open {
 
   .instruction-note p {
     font-size: var(--text-base);
+  }
+    .medication-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .medication-time {
+    font-size: var(--text-xl);
+  }
+
+  .medication-information {
+    min-width: 0;
+  }
+
+  .medication-information h3 {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .medication-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+
+    width: 100%;
+    gap: 8px;
   }
 
 }

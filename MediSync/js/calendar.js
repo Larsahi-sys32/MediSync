@@ -9,7 +9,7 @@ let medications = [
     name: "Test Medication",
     dose: "500 mg",
     time: "08:00 AM",
-    date: "2026-11-22",
+    date: "2026-11-24",
     instructions: "This is a test instruction.",
     notificationEnabled: true,
     status: "upcoming"
@@ -19,7 +19,7 @@ let medications = [
     name: "Second Test Medication",
     dose: "1 tablet",
     time: "01:00 PM",
-    date: "2026-11-22",
+    date: "2026-11-23",
     instructions: "Second test instruction.",
     notificationEnabled: false,
     status: "upcoming"
@@ -56,6 +56,22 @@ const noteClose = document.getElementById("note-close");
 
 const todayTab = document.getElementById("todsched-tab");
 const monthTab = document.getElementById("monthcal-tab");
+
+const datePreviewOverlay = document.getElementById(
+  "date-preview-overlay"
+);
+const previewMedications = document.getElementById(
+  "preview-medications"
+);
+const datePreviewTitle = document.getElementById(
+  "date-preview-title"
+);
+const closeDatePreview = document.getElementById(
+  "close-date-preview"
+);
+const dateHoverPreview = document.getElementById(
+  "date-hover-preview"
+);
 
 /* ========================================
    DATE UTILITIES
@@ -230,8 +246,7 @@ function renderTodaySchedule() {
       <div class="medication-actions">
 
         <div class="notification-control">
-          <span class="notification-label">notif</span>
-
+          <i class="fa-regular fa-clock notification-icon"></i>
           <label class="notification-switch">
             <input
               type="checkbox"
@@ -239,7 +254,6 @@ function renderTodaySchedule() {
               ${medication.notificationEnabled ? "checked" : ""}
               aria-label="Toggle notifications for ${escapeHTML(medication.name || "medication")}"
             >
-
             <span class="switch-slider"></span>
           </label>
         </div>
@@ -441,16 +455,6 @@ function renderCalendar() {
 
     calendarGrid.appendChild(dayElement);
   }
-
-  if (selectedDate) {
-    updateDatePreview(selectedDate);
-    } else {
-    const preview = document.getElementById("date-preview");
-
-    if (preview) {
-        preview.hidden = true;
-    }
-    }
 }
 
 /* ========================================
@@ -475,6 +479,40 @@ function renderWeekdays() {
     <span>Thu</span>
     <span>Fri</span>
     <span>Sat</span>
+  `;
+
+
+  //CALENDAR LEGENDS
+
+  let legend = document.querySelector(".calendar-legend");
+
+  if (!legend) {
+    legend = document.createElement("div");
+    legend.className = "calendar-legend";
+
+    calendarGrid.after(legend);
+  }
+
+  legend.innerHTML = `
+    <span>
+      <i class="legend-dot all-taken"></i>
+      All Taken
+    </span>
+
+    <span>
+      <i class="legend-dot upcoming"></i>
+      Upcoming
+    </span>
+
+    <span>
+      <i class="legend-dot partial"></i>
+      Partial
+    </span>
+
+    <span>
+      <i class="legend-dot missed"></i>
+      Missed
+    </span>
   `;
 }
 
@@ -530,97 +568,10 @@ nextMonthButton.addEventListener("click", () => {
 });
 
 /* ========================================
-   DATE SELECTION & PREVIEW
-======================================== */
-
-function createDatePreview() {
-  let preview = document.getElementById("date-preview");
-
-  if (!preview) {
-    preview = document.createElement("section");
-
-    preview.id = "date-preview";
-    preview.className = "date-preview";
-
-    preview.hidden = true;
-
-    calendarGrid.after(preview);
-  }
-
-  return preview;
-}
-
-function updateDatePreview(dateString) {
-  if (!dateString) return;
-
-  const preview = createDatePreview();
-
-  const dayMedications = getMedicationsForDate(dateString);
-
-  preview.innerHTML = `
-    <div class="preview-header">
-      <h2>${formatDisplayDate(dateString)}</h2>
-
-      <button
-        type="button"
-        id="close-date-preview"
-        aria-label="Close date preview"
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-
-    <div class="preview-medications">
-
-      ${
-        dayMedications.length === 0
-          ? `
-            <p class="preview-empty">
-              No medications scheduled for this date.
-            </p>
-          `
-          : dayMedications.map(medication => `
-            <div class="preview-medication">
-
-              <span class="preview-medication-time">
-                ${escapeHTML(medication.time || "--:--")}
-              </span>
-
-              <div class="preview-medication-info">
-                <strong>
-                  ${escapeHTML(medication.name || "Medication name")}
-                </strong>
-
-                <span>
-                  ${escapeHTML(medication.dose || "Dose amount")}
-                </span>
-              </div>
-
-              <span class="medication-preview-status">
-                ${escapeHTML(getMedicationStatus(medication))}
-              </span>
-
-            </div>
-          `).join("")
-      }
-
-    </div>
-  `;
-
-  preview.hidden = false;
-
-  const closeButton = document.getElementById(
-    "close-date-preview"
-  );
-
-  closeButton.addEventListener("click", () => {
-    preview.hidden = true;
-  });
-}
-
-/* ========================================
    DATE INTERACTIONS
 ======================================== */
+
+// CLICK: OPEN CENTERED MODAL
 
 calendarGrid.addEventListener("click", event => {
   const day = event.target.closest(".calendar-day");
@@ -636,23 +587,195 @@ calendarGrid.addEventListener("click", event => {
   );
 
   renderCalendar();
+
+  openDatePreview(selectedDate);
 });
 
-calendarGrid.addEventListener("mouseover", event => {
-  if (!window.matchMedia("(hover: hover)").matches) return;
+// HOVER: SHOW FLOATING PREVIEW
+
+calendarGrid.addEventListener("pointerover", event => {
+
+  if (event.pointerType !== "mouse") return;
 
   const day = event.target.closest(".calendar-day");
 
-  if (!day || !day.dataset.date) return;
+  if (!day || !calendarGrid.contains(day)) return;
 
-  if (day.dataset.date === hoveredDate) return;
+  // Ignore movement between children of the same date
 
-  hoveredDate = day.dataset.date;
+  if (day.contains(event.relatedTarget)) return;
 
-  const dayMedications = getMedicationsForDate(hoveredDate);
-
+  showDateHoverPreview(day.dataset.date, day);
 
 });
+
+// HIDE WHEN LEAVING A DATE
+
+calendarGrid.addEventListener("pointerout", event => {
+
+  if (event.pointerType !== "mouse") return;
+
+  const day = event.target.closest(".calendar-day");
+
+  if (!day) return;
+
+  if (day.contains(event.relatedTarget)) return;
+
+  hideDateHoverPreview();
+
+});
+
+// CLOSE MODAL
+
+closeDatePreview.addEventListener(
+  "click",
+  closeDatePreviewModal
+);
+
+// CLOSE WHEN CLICKING DIMMED BACKGROUND
+
+datePreviewOverlay.addEventListener("click", event => {
+  if (event.target === datePreviewOverlay) {
+    closeDatePreviewModal();
+  }
+});
+
+// ESCAPE KEY
+
+document.addEventListener("keydown", event => {
+  if (
+    event.key === "Escape" &&
+    datePreviewOverlay.classList.contains("open")
+  ) {
+    closeDatePreviewModal();
+  }
+});
+
+// HIDE HOVER PREVIEW WHEN SCROLLING
+
+document.querySelector(".workspace").addEventListener(
+  "scroll",
+  hideDateHoverPreview
+);
+
+/* ========================================
+   DATE PREVIEW CONTENT
+======================================== */
+
+function renderDatePreviewContent(dateString) {
+  const dayMedications = getMedicationsForDate(dateString);
+
+  return `
+    ${
+      dayMedications.length === 0
+        ? `
+          <p class="preview-empty">
+            No medications scheduled for this date.
+          </p>
+        `
+        : dayMedications.map(medication => `
+          <div class="preview-medication">
+
+            <span class="preview-medication-time">
+              ${escapeHTML(medication.time || "--:--")}
+            </span>
+
+            <div class="preview-medication-info">
+              <strong>
+                ${escapeHTML(medication.name || "Medication name")}
+              </strong>
+
+              <span>
+                ${escapeHTML(medication.dose || "Dose amount")}
+              </span>
+            </div>
+
+            <span class="medication-preview-status">
+              ${escapeHTML(getMedicationStatus(medication))}
+            </span>
+
+          </div>
+        `).join("")
+    }
+  `;
+}
+
+/* ========================================
+   FLOATING HOVER PREVIEW
+======================================== */
+
+function showDateHoverPreview(dateString, dayElement) {
+  if (!dateHoverPreview) return;
+
+  dateHoverPreview.innerHTML = `
+    <h3>${formatDisplayDate(dateString)}</h3>
+
+    <div class="preview-medications">
+      ${renderDatePreviewContent(dateString)}
+    </div>
+  `;
+
+  const rect = dayElement.getBoundingClientRect();
+
+  const previewWidth = 300;
+  const previewHeight = dateHoverPreview.offsetHeight || 180;
+
+  let left = rect.left + rect.width / 2 - previewWidth / 2;
+  let top = rect.bottom + 10;
+
+  // Keep preview inside screen horizontally
+
+  left = Math.max(
+    12,
+    Math.min(left, window.innerWidth - previewWidth - 12)
+  );
+
+  // Display above the date if there isn't enough room below
+
+  if (top + previewHeight > window.innerHeight - 12) {
+    top = rect.top - previewHeight - 10;
+  }
+
+  dateHoverPreview.style.left = `${left}px`;
+  dateHoverPreview.style.top = `${Math.max(12, top)}px`;
+
+  dateHoverPreview.classList.add("visible");
+  dateHoverPreview.setAttribute("aria-hidden", "false");
+}
+
+function hideDateHoverPreview() {
+  dateHoverPreview.classList.remove("visible");
+  dateHoverPreview.setAttribute("aria-hidden", "true");
+}
+
+/* ========================================
+   CENTERED DATE PREVIEW MODAL
+======================================== */
+
+function openDatePreview(dateString) {
+  hideDateHoverPreview();
+
+  datePreviewTitle.textContent = formatDisplayDate(dateString);
+
+  previewMedications.innerHTML =
+    renderDatePreviewContent(dateString);
+
+  datePreviewOverlay.classList.add("open");
+
+  datePreviewOverlay.setAttribute("aria-hidden", "false");
+
+  document.body.classList.add("modal-open");
+
+  closeDatePreview.focus();
+}
+
+function closeDatePreviewModal() {
+  datePreviewOverlay.classList.remove("open");
+
+  datePreviewOverlay.setAttribute("aria-hidden", "true");
+
+  document.body.classList.remove("modal-open");
+}
 
 /* ========================================
    INSTRUCTIONS STICKY NOTE
