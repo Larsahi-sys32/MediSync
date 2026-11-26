@@ -1,10 +1,3 @@
-/* ========================================
-   MEDISYNC - MEDICATIONS FRONTEND
-   Frontend demo only.
-   Temporary in-memory data.
-   NO LOCAL STORAGE.
-======================================== */
-
 // ========================================
 // 1. ELEMENT SELECTORS
 // ========================================
@@ -46,6 +39,13 @@ const medicationSearch =
 
 const medicationFilter =
   document.getElementById("medication-filter");
+
+const filterLabel = document.getElementById("filter-label");
+
+medicationFilter.addEventListener("change", () => {
+  filterLabel.textContent =
+    medicationFilter.options[medicationFilter.selectedIndex].text;
+});
 
 const formType =
   document.getElementById("medication-form-type");
@@ -98,10 +98,29 @@ const draftList =
 
 const draftCount =
   document.getElementById("draft-count");
+  
+// REFILL MODAL ELEMENTS
 
-const toast =
-  document.getElementById("medication-toast");
+const refillModal =
+  document.getElementById("refill-modal");
 
+const refillForm =
+  document.getElementById("refill-form");
+
+const refillMedicationName =
+  document.getElementById("refill-medication-name");
+
+const refillMedicationStrength =
+  document.getElementById("refill-medication-strength");
+
+const refillCurrentStock =
+  document.getElementById("refill-current-stock");
+
+const refillQuantityInput =
+  document.getElementById("refill-quantity");
+  
+
+let selectedRefillMedicationId = null;
 
 // ========================================
 // 2. TEMPORARY APPLICATION DATA
@@ -115,30 +134,77 @@ let selectedImage = {
 };
 
 let uploadedImageUrl = null;
-let toastTimeout = null;
 
 // Data exists only while the page is open.
 // Refreshing the page clears all data.
 
-let medications = [];
+let medications = [
+  {
+  id: "med-001",
+
+    name: "Amoxicillin",
+    strength: "500 mg",
+    form: "Capsule",
+
+    doseAmount: "1 capsule",
+
+    quantityAvailable: "24",
+
+    scheduleType: "daily",
+    frequency: "3 times daily",
+    takeEvery: "",
+
+    reminderTimes: [
+      "08:00",
+      "14:00",
+      "20:00"
+    ],
+
+    startDate: "2026-11-20",
+    endDate: "2026-11-30",
+
+    prescribingDoctor: "Dr. Michael Santos",
+
+    instructions: "Take with food. Complete the prescribed course.",
+
+    image: {
+      type: "preset",
+      value: "capsule"
+    },
+
+    status: "active",
+
+    createdAt: "2026-11-26T08:00:00.000Z"
+  },
+  {
+    id: "med-002",
+    name: "Cetirizine",
+    strength: "10 mg",
+    form: "Tablet",
+    doseAmount: "1 tablet",
+    // No quantityAvailable property
+    scheduleType: "daily",
+    frequency: "Once daily",
+    takeEvery: "",
+    reminderTimes: ["08:00"],
+    startDate: "2026-11-26",
+    endDate: "2026-12-05",
+    prescribingDoctor: "Dr. Maria Reyes",
+    instructions: "Take as prescribed.",
+    image: {
+      type: "preset",
+      value: "tablet"
+    },
+    status: "active",
+    createdAt: "2026-11-26T09:00:00.000Z"
+  }
+];
 let drafts = [];
 
 
 // ========================================
 // 3. UTILITY FUNCTIONS
 // ========================================
-
-function showToast(message) {
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimeout);
-
-  toastTimeout = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2600);
-}
 
 function escapeHTML(value = "") {
   return String(value).replace(/[&<>"']/g, character => ({
@@ -287,10 +353,6 @@ function validateStep(index) {
     );
 
     if (!scheduleType) {
-      showToast(
-        "Choose a schedule type to continue."
-      );
-
       return false;
     }
 
@@ -302,10 +364,6 @@ function validateStep(index) {
 
     if (!reminderTimes.some(input => input.value)) {
       reminderTimes[0]?.focus();
-
-      showToast(
-        "Add at least one reminder time."
-      );
 
       return false;
     }
@@ -321,12 +379,10 @@ function validateStep(index) {
 
 document.querySelectorAll(".btn-next").forEach(button => {
   button.addEventListener("click", () => {
-    if (validateStep(currentStep)) {
-      showStep(currentStep + 1);
-    }
+    // Allow navigation without validating required fields.
+    showStep(currentStep + 1);
   });
 });
-
 
 // ========================================
 // 8. PREVIOUS BUTTONS
@@ -411,17 +467,54 @@ medicationForm.querySelectorAll(
 // 11. MULTIPLE REMINDER TIMES
 // ========================================
 
-function updateReminderRemoveButtons() {
+function renderReminderRows() {
   const rows = [
     ...reminderList.querySelectorAll(".reminder-row")
   ];
 
-  rows.forEach(row => {
-    row.querySelector(
-      ".remove-reminder"
-    ).disabled = rows.length === 1;
+  rows.forEach((row, index) => {
+    const isFirst = index === 0;
+    const isLast = index === rows.length - 1;
+
+    // Remove existing buttons before rebuilding controls.
+    row.querySelectorAll("button").forEach(button => {
+      button.remove();
+    });
+
+    // Only added rows have a remove button.
+    if (!isFirst) {
+      const removeButton = document.createElement("button");
+
+      removeButton.type = "button";
+      removeButton.className = "remove-reminder";
+      removeButton.setAttribute("aria-label", "Remove reminder");
+
+      removeButton.innerHTML = `
+        <i class="fa-solid fa-minus"></i>
+      `;
+
+      row.appendChild(removeButton);
+    }
+
+    // Only the last row has an add button.
+    if (isLast) {
+      const addButton = document.createElement("button");
+
+      addButton.type = "button";
+      addButton.className = "add-reminder";
+      addButton.setAttribute("aria-label", "Add reminder");
+
+      addButton.innerHTML = `
+        <i class="fa-solid fa-plus"></i>
+      `;
+
+      row.appendChild(addButton);
+    }
   });
 }
+
+
+// Create a reminder row.
 
 function addReminderRow(value = "") {
   const row = document.createElement("div");
@@ -435,47 +528,48 @@ function addReminderRow(value = "") {
       aria-label="Reminder time"
       required
     >
-
-    <button
-      type="button"
-      class="remove-reminder"
-      aria-label="Remove reminder"
-    >
-      <i class="fa-solid fa-minus"></i>
-    </button>
   `;
 
-  const input = row.querySelector("input");
-
-  input.value = value;
-
-  row.querySelector(
-    ".remove-reminder"
-  ).addEventListener("click", () => {
-    row.remove();
-
-    updateReminderRemoveButtons();
-  });
+  row.querySelector("input").value = value;
 
   reminderList.appendChild(row);
 
-  updateReminderRemoveButtons();
+  renderReminderRows();
 }
 
 
-// Add reminder button
+// Handle add and remove buttons.
 
-document.getElementById("add-reminder").addEventListener(
-  "click",
-  () => {
+reminderList.addEventListener("click", event => {
+
+  // ADD REMINDER
+
+  const addButton = event.target.closest(".add-reminder");
+
+  if (addButton) {
     addReminderRow();
 
     reminderList.lastElementChild
       ?.querySelector("input")
       ?.focus();
-  }
-);
 
+    return;
+  }
+
+
+  // REMOVE REMINDER
+
+  const removeButton = event.target.closest(".remove-reminder");
+
+  if (removeButton) {
+    const row = removeButton.closest(".reminder-row");
+
+    row.remove();
+
+    renderReminderRows();
+  }
+
+});
 
 // ========================================
 // 12. IMAGE PREVIEW
@@ -488,6 +582,8 @@ function setPresetImage(preset) {
   };
 
   uploadedImageUrl = null;
+
+  removeImageButton.hidden = true;
 
   customImageInput.value = "";
 
@@ -552,8 +648,6 @@ customImageInput.addEventListener("change", () => {
   if (!file) return;
 
   if (!file.type.startsWith("image/")) {
-    showToast("Please choose an image file.");
-
     customImageInput.value = "";
 
     return;
@@ -569,6 +663,8 @@ customImageInput.addEventListener("change", () => {
     type: "upload",
     value: file.name
   };
+
+  removeImageButton.hidden = false;
 
   imagePreview.innerHTML = `
     <img
@@ -593,7 +689,18 @@ customImageInput.addEventListener("change", () => {
 // Remove image button
 
 removeImageButton.addEventListener("click", () => {
+
+  if (uploadedImageUrl) {
+    URL.revokeObjectURL(uploadedImageUrl);
+    uploadedImageUrl = null;
+  }
+
+  customImageInput.value = "";
+
   setPresetImage("bottle");
+
+  removeImageButton.hidden = true;
+
 });
 
 
@@ -758,8 +865,6 @@ medicationForm.addEventListener("submit", event => {
 
   // Return to medication list.
   switchMainTab("list");
-
-  showToast("Medication saved.");
 });
 
 
@@ -782,7 +887,6 @@ function saveDraft() {
 
   updateDraftCount();
 
-  showToast("Draft saved temporarily on this page.");
 }
 
 
@@ -935,8 +1039,6 @@ draftList.addEventListener("click", event => {
 
     renderDrafts();
 
-    showToast("Draft deleted.");
-
     return;
   }
 
@@ -948,8 +1050,6 @@ draftList.addEventListener("click", event => {
   draftsModal.close();
 
   switchMainTab("add");
-
-  showToast("Draft opened.");
 });
 
 
@@ -1060,6 +1160,162 @@ function getScheduleLabel(medication) {
   return medication.frequency || "—";
 }
 
+// ========================================
+// 31. REFILL MEDICATION MODAL
+// ========================================
+
+// OPEN REFILL MODAL
+
+function openRefillModal(medication) {
+
+  selectedRefillMedicationId = medication.id;
+
+  const unit =
+    medication.form === "Tablet"
+      ? "Tablets"
+      : "Capsules";
+
+  refillMedicationName.textContent =
+    medication.name;
+
+  refillMedicationStrength.textContent =
+    `${medication.strength} · ${medication.form}`;
+
+  refillCurrentStock.textContent =
+    `${medication.quantityAvailable} ${unit}`;
+
+  refillQuantityInput.value = "";
+
+  refillQuantityInput.setCustomValidity("");
+
+  refillModal.showModal();
+
+  refillQuantityInput.focus();
+}
+
+
+// CLOSE REFILL MODAL
+
+function closeRefillModal() {
+
+  refillModal.close();
+
+  refillForm.reset();
+
+  selectedRefillMedicationId = null;
+}
+
+
+// REFILL BUTTON EVENT
+
+medicationList.addEventListener("click", event => {
+
+  const refillButton = event.target.closest(
+    "[data-refill-id]"
+  );
+
+  if (!refillButton) return;
+
+  const medication = medications.find(
+    item => item.id === refillButton.dataset.refillId
+  );
+
+  if (!medication) return;
+
+  openRefillModal(medication);
+
+});
+
+
+// CONFIRM REFILL
+
+refillForm.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const quantity = Number(refillQuantityInput.value);
+
+  if (
+    !Number.isSafeInteger(quantity) ||
+    quantity < 1
+  ) {
+    refillQuantityInput.setCustomValidity(
+      "Please enter a valid whole number greater than zero."
+    );
+
+    refillQuantityInput.reportValidity();
+
+    return;
+  }
+
+  const medication = medications.find(
+    item => item.id === selectedRefillMedicationId
+  );
+
+  if (!medication) {
+    closeRefillModal();
+    return;
+  }
+
+  const currentStock =
+    Number(medication.quantityAvailable);
+
+  if (
+    !Number.isSafeInteger(currentStock) ||
+    currentStock < 0 ||
+    !Number.isSafeInteger(currentStock + quantity)
+  ) {
+    refillQuantityInput.setCustomValidity(
+      "The resulting stock quantity is invalid."
+    );
+
+    refillQuantityInput.reportValidity();
+
+    return;
+  }
+
+  // UPDATE AVAILABLE STOCK
+
+  medication.quantityAvailable =
+    String(currentStock + quantity);
+
+  // REFRESH MEDICATION LIST
+
+  renderMedications();
+
+  closeRefillModal();
+
+});
+
+
+// CLEAR CUSTOM VALIDATION MESSAGE
+
+refillQuantityInput.addEventListener("input", () => {
+  refillQuantityInput.setCustomValidity("");
+});
+
+
+// CLOSE BUTTON
+
+document.getElementById("close-refill-btn")
+  .addEventListener("click", closeRefillModal);
+
+
+// CANCEL BUTTON
+
+document.getElementById("cancel-refill-btn")
+  .addEventListener("click", closeRefillModal);
+
+
+// CLOSE WHEN CLICKING OUTSIDE
+
+refillModal.addEventListener("click", event => {
+
+  if (event.target === refillModal) {
+    closeRefillModal();
+  }
+
+});
 
 // ========================================
 // 26. RENDER MEDICATIONS
@@ -1190,86 +1446,89 @@ function renderMedications() {
 
 
     // Medication card HTML.
-
     card.innerHTML = `
-      <div class="medication-main">
-
-        <div
-          class="medication-img"
-          aria-hidden="true"
-        >
-          <i class="fa-solid fa-prescription-bottle-medical"></i>
-        </div>
 
         <div class="medication-information">
 
-          <h3>
-            ${escapeHTML(medication.name)}
-          </h3>
+          <div class="medication-img" aria-hidden="true">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+          </div>
 
-          <p>
-            ${escapeHTML(medication.strength)}
-            ·
-            ${escapeHTML(medication.form)}
-          </p>
+          <div class="medication-details">
+            <h3>${escapeHTML(medication.name)}</h3>
+            <p>
+              ${escapeHTML(medication.strength)}
+              ·
+              ${escapeHTML(medication.form)}
+            </p>
+          </div>
+
+          ${
+            medication.quantityAvailable !== undefined &&
+            medication.quantityAvailable !== null &&
+            medication.quantityAvailable !== ""
+            ? `
+              <div class="medication-stock">
+                <div class="stock-information">
+                  <span>Available stock</span>
+                  <strong>
+                    ${escapeHTML(medication.quantityAvailable)}
+                    ${escapeHTML(
+                      medication.form === "Tablet"
+                        ? "tablets"
+                        : medication.form === "Capsule"
+                          ? "capsules"
+                          : "units"
+                    )}
+                  </strong>
+                </div>
+              </div>
+            `
+            : ""
+          }
 
         </div>
 
-      </div>
+        <div class="medication-actions">
 
+          ${
+            medication.quantityAvailable !== undefined &&
+            medication.quantityAvailable !== null &&
+            medication.quantityAvailable !== ""
+            ? `
+              <button
+                type="button"
+                class="medication-refill"
+                data-refill-id="${escapeHTML(medication.id)}"
+                aria-label="Refill ${escapeHTML(medication.name)}"
+              >
+                <i class="fa-solid fa-plus"></i>
+                <span>Refill</span>
+              </button>
+            `
+            : ""
+          }
 
-      <div class="medication-dose">
+          <button
+            type="button"
+            class="medication-status ${statusClass}"
+            data-status-id="${escapeHTML(medication.id)}"
+          >
+            ${statusLabel}
+          </button>
 
-        <span>Dosage</span>
+          <button
+            type="button"
+            class="medication-open"
+            data-open-id="${escapeHTML(medication.id)}"
+            aria-label="View ${escapeHTML(medication.name)} details"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
 
-        <strong>
-          ${escapeHTML(medication.doseAmount || "—")}
-        </strong>
+        </div>
 
-      </div>
-
-
-      <div class="medication-schedule">
-
-        <span>Schedule</span>
-
-        <strong>
-          ${escapeHTML(schedule)}
-        </strong>
-
-        <span>
-          ${escapeHTML(getScheduleLabel(medication))}
-        </span>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="medication-status ${statusClass}"
-        data-status-id="${escapeHTML(medication.id)}"
-        aria-label="Change status for ${escapeHTML(medication.name)}"
-      >
-
-        ${statusLabel}
-
-        <i class="fa-solid fa-chevron-down"></i>
-
-      </button>
-
-
-      <button
-        type="button"
-        class="medication-open"
-        data-open-id="${escapeHTML(medication.id)}"
-        aria-label="View ${escapeHTML(medication.name)} details"
-      >
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-      </button>
     `;
-
     medicationList.appendChild(card);
 
   });
@@ -1323,10 +1582,6 @@ medicationList.addEventListener("click", event => {
 
     renderMedications();
 
-    showToast(
-      `${medication.name} marked ${medication.status}.`
-    );
-
     return;
   }
 
@@ -1344,10 +1599,7 @@ medicationList.addEventListener("click", event => {
     );
 
     if (!medication) return;
-
-    showToast(
-      `${medication.name} · ${medication.doseAmount}`
-    );
+    detailsOpen(medication);
   }
 
 });
@@ -1380,25 +1632,102 @@ document.querySelectorAll(".connected-profile").forEach(
 
       profileSelector.open = false;
 
-      showToast(
-        `Viewing ${name}'s medications.`
-      );
-
     });
 
   }
 );
 
 
-// INITIALIZE MEDISYNC
+// ========================================
+// MEDICATION DETAILS WORKSPACE
+// ========================================
+const detailsWorkspace = document.getElementById("medication-details-workspace");
+const detailsBack = document.getElementById("details-back");
+const detailsTopActions = document.getElementById("details-top-actions");
+const detailsIdentity = document.getElementById("details-identity-row");
+const detailsStepContent = document.getElementById("details-step-content");
+const detailsDots = [...document.querySelectorAll("#details-page-indicator .dot")];
+let viewedMedicationId = null, detailsStep = 0, detailsEditing = false, detailsOriginal = null;
+let detailsUploadUrl = null;
+const detailsLabels = ["Medication Information", "Schedule & Frequency", "Prescription & Instructions", "Medication Image"];
+const detailsPresetIcons = {bottle:"fa-prescription-bottle-medical",tablet:"fa-tablets",capsule:"fa-capsules",pills:"fa-pills"};
+function detailsDisplay(value) { return value === undefined || value === null || value === "" ? "Not provided" : escapeHTML(value); }
+function detailsBox(value, extra="") { return `<div class="details-value-box ${extra}">${detailsDisplay(value)}</div>`; }
+function detailsField(label, key, value, type="text", options=null, hint="", required=false) {
+ const id=`details-${key}`;
+ let control;
+ if(options) control=`<select id="${id}" data-detail-key="${key}"><option value="">Select</option>${options.map(o=>`<option value="${escapeHTML(o)}" ${o===value?'selected':''}>${escapeHTML(o)}</option>`).join('')}</select>`;
+ else if(type==='textarea') control=`<textarea id="${id}" data-detail-key="${key}" rows="4">${escapeHTML(value??'')}</textarea>`;
+ else control=`<input id="${id}" type="${type}" data-detail-key="${key}" value="${escapeHTML(value??'')}" ${type==='number'?'min="0" step="1"':''}>`;
+ return `<div class="form-group details-field"><label for="${id}">${label}${required?'<span class="required-mark">*</span>':''}</label>${detailsEditing?control:detailsBox(value)}${detailsEditing&&hint?`<small class="field-hint">${hint}</small>`:''}</div>`;
+}
+function detailsImageStep(m) {
+ const image=m.image||{type:"preset",value:"bottle"};
+ const preset=image.type==="preset"?(image.value||"bottle"):"";
+ const uploadName=image.type==="upload"?(image.value||"Uploaded image"):"";
+ const icon=detailsPresetIcons[preset]||detailsPresetIcons.bottle;
+ const displayName=preset?`${preset.charAt(0).toUpperCase()+preset.slice(1)} preset`:uploadName;
+ const preview=image.type==="upload"&&detailsUploadUrl?`<img src="${detailsUploadUrl}" alt="Selected medication image">`:`<i class="fa-solid ${icon}" aria-hidden="true"></i>`;
+ if(!detailsEditing) return `<div class="image-grid details-image-grid"><div class="preview-col details-preview">${preview}<span>${escapeHTML(displayName||"Medication image")}</span></div><div class="image-options"><div class="presets-panel"><h3>Medication Image</h3>${detailsBox(displayName||"No image selected")}</div></div></div>`;
+ return `<div class="image-grid details-image-grid"><div class="preview-col details-preview" id="details-image-preview">${preview}<span>${escapeHTML(displayName||"Image preview")}</span></div><div class="image-options"><div class="presets-panel"><h3>History / Presets</h3><div class="presets-row" role="group" aria-label="Choose medication image">${Object.keys(detailsPresetIcons).map(p=>`<button type="button" class="preset-item ${p===preset?'selected':''}" data-details-preset="${p}" aria-pressed="${p===preset}" aria-label="${p} icon"><i class="fa-solid ${detailsPresetIcons[p]}"></i></button>`).join('')}</div></div><div class="upload-row details-upload-row"><label for="details-custom-image" class="btn-attach">Attach Image <i class="fa-solid fa-paperclip"></i></label><span id="details-file-name" class="file-name">${escapeHTML(uploadName||"No file chosen")}</span><input type="file" id="details-custom-image" accept="image/*" hidden><button type="button" class="remove-image details-remove-image" id="details-remove-image" aria-label="Remove selected image" title="Remove selected image" ${image.type!=='upload'?'hidden':''}><i class="fa-solid fa-xmark"></i></button></div></div></div>`;
+}
+function detailsReminderRows(m) {
+ const times=Array.isArray(m.reminderTimes)?m.reminderTimes:[];
+ if(!detailsEditing) return `<div class="form-group details-field reminder-group"><label>Reminder Time(s)</label><div class="reminder-list details-reminder-list">${times.length?times.map(t=>`<div class="reminder-row"><div class="details-value-box reminder-value">${escapeHTML(t)}</div></div>`).join(''):'<div class="details-value-box">No reminder set</div>'}</div></div>`;
+ return `<div class="form-group reminder-group details-field"><label>Reminder Time(s) <span>*</span></label><div class="reminder-list details-reminder-list">${times.map((t,i)=>`<div class="reminder-row"><input type="time" data-details-reminder value="${escapeHTML(t)}" aria-label="Reminder time ${i+1}">${i===times.length-1?'<button type="button" class="add-reminder" id="details-add-reminder" aria-label="Add reminder"><i class="fa-solid fa-plus"></i></button>':''}${times.length>1?`<button type="button" class="remove-reminder" data-remove-reminder aria-label="Remove reminder"><i class="fa-solid fa-minus"></i></button>`:''}</div>`).join('')}${times.length===0?'<div class="reminder-row"><input type="time" data-details-reminder aria-label="Reminder time"><button type="button" class="add-reminder" id="details-add-reminder" aria-label="Add reminder"><i class="fa-solid fa-plus"></i></button></div>':''}</div></div>`;
+}
+function detailsRender() {
+ const m=medications.find(x=>x.id===viewedMedicationId); if(!m)return;
+ const statusClass=m.status==='inactive'?'inactive':'';
+ detailsIdentity.innerHTML=`<h2>${escapeHTML(m.name)}</h2><button type="button" class="medication-status ${statusClass}" id="details-status">${m.status==='inactive'?'Inactive':'Active'}</button>`;
+ detailsTopActions.innerHTML=detailsEditing?`<div class="details-save-cancel"><button type="button" class="details-icon-action" id="details-cancel-edit">Cancel</button><button type="button" class="details-icon-action" id="details-save-edit"><i class="fa-solid fa-check"></i> Save</button></div>`:`<button type="button" class="details-icon-action" id="details-edit"><i class="fa-solid fa-pen"></i> Edit</button><button type="button" class="details-icon-action danger" id="details-delete" title="Delete medication" aria-label="Delete medication"><i class="fa-solid fa-trash"></i></button>`;
+ const nameField=detailsField('Medication Name','name',m.name,'text',null,'',true);
+ const strengthForm=`<div class="form-row">${detailsField('Strength','strength',m.strength,'text',null,'',true)}${detailsField('Form','form',m.form,'text',['Tablet','Capsule','Liquid','Syrup','Drops','Inhaler','Injection','Cream','Ointment','Patch','Other'],'',true)}</div>`;
+ const doseField=detailsField('Dose Amount','doseAmount',m.doseAmount,'text',null,'',true);
+ const countable=['Tablet','Capsule','Patch'].includes(m.form);
+ const quantityField=`<div class="form-group quantity-group details-field"><label for="details-quantityAvailable">Quantity Available</label>${detailsEditing?`<div class="input-with-unit"><input type="number" id="details-quantityAvailable" data-detail-key="quantityAvailable" min="0" step="1" value="${escapeHTML(m.quantityAvailable??'')}" ${!countable?'disabled':''}><span class="quantity-unit">${countable?'units available':'Quantity'}</span></div>`:`<div class="input-with-unit">${detailsBox(m.quantityAvailable)}<span class="quantity-unit">${countable?'units available':'Quantity'}</span></div>`}${detailsEditing?'<small class="field-hint">For countable medicines, enter the number of units you currently have.</small>':''}</div>`;
+ const scheduleChoice=`<fieldset class="form-group schedule-type-group"><legend>How is your medication scheduled?</legend>${detailsEditing?`<div class="radio-row"><label class="radio-option"><input type="radio" name="details-scheduleType" data-detail-key="scheduleType" value="daily" ${m.scheduleType==='daily'?'checked':''}><span>Daily Frequency</span></label><label class="radio-option"><input type="radio" name="details-scheduleType" data-detail-key="scheduleType" value="interval" ${m.scheduleType==='interval'?'checked':''}><span>Hourly Interval</span></label></div>`:detailsBox(m.scheduleType==='interval'?'Hourly Interval':'Daily Frequency')}</fieldset>`;
+ const scheduleFields=m.scheduleType==='interval'?detailsField('Take Every','takeEvery',m.takeEvery,'text',['4 hours','6 hours','8 hours','12 hours','24 hours'],'',true):detailsField('Frequency','frequency',m.frequency,'text',['Once a day','Twice a day','3 times a day','4 times a day','5 times a day'],'',true);
+ const dates=`<div class="form-row">${detailsField('Start Date','startDate',m.startDate,'date',null,'',true)}${detailsField('End Date','endDate',m.endDate,'date')}</div>`;
+ const body=[`${nameField}${strengthForm}${doseField}${quantityField}`,`${scheduleChoice}${scheduleFields}${detailsReminderRows(m)}${dates}`,`${detailsField('Prescribing Doctor','prescribingDoctor',m.prescribingDoctor)}${detailsField('Additional Instructions','instructions',m.instructions,'textarea')}`,detailsImageStep(m)];
+ detailsStepContent.innerHTML=`<div class="details-step-content"><header class="header-row"><h2>${detailsLabels[detailsStep]}</h2><div class="step-nav"><button type="button" class="step-arrow" id="details-prev" ${detailsStep===0?'disabled':''} aria-label="Previous step"><i class="fa-solid fa-chevron-left"></i></button><button type="button" class="step-arrow" id="details-next" ${detailsStep===3?'disabled':''} aria-label="Next step"><i class="fa-solid fa-chevron-right"></i></button></div></header><div class="form-fields details-fields">${body[detailsStep]}</div></div>`;
+ detailsDots.forEach((d,i)=>d.classList.toggle('active',i===detailsStep));
+ detailsDots.forEach((d,i)=>{d.onclick=()=>{detailsStep=i;detailsRender();};});
+ document.getElementById('details-prev').onclick=()=>{if(detailsStep>0){detailsStep--;detailsRender();}};
+ document.getElementById('details-next').onclick=()=>{if(detailsStep<3){detailsStep++;detailsRender();}};
+ document.getElementById('details-edit')?.addEventListener('click',()=>{detailsOriginal=structuredClone(m);detailsEditing=true;detailsRender();});
+ document.getElementById('details-cancel-edit')?.addEventListener('click',()=>{Object.assign(m,detailsOriginal);detailsEditing=false;detailsRender();});
+ document.getElementById('details-save-edit')?.addEventListener('click',()=>{
+   detailsStepContent.querySelectorAll('[data-detail-key]').forEach(el=>{const k=el.dataset.detailKey;if(k==='scheduleType'){if(el.checked)m[k]=el.value;}else m[k]=el.value;});
+   m.reminderTimes=[...detailsStepContent.querySelectorAll('[data-details-reminder]')].map(el=>el.value).filter(Boolean);
+   detailsEditing=false;detailsOriginal=null;renderMedications();detailsRender();
+ });
+ document.getElementById('details-delete')?.addEventListener('click',()=>detailsShowDeleteDialog(m));
+ document.getElementById('details-status').onclick=()=>{m.status=m.status==='inactive'?'active':'inactive';renderMedications();detailsRender();};
+ // Reminder row actions: delegated locally after rendering.
+ detailsStepContent.querySelector('#details-add-reminder')?.addEventListener('click',()=>{const vals=[...detailsStepContent.querySelectorAll('[data-details-reminder]')].map(x=>x.value);vals.push('');m.reminderTimes=vals;detailsRender();detailsStepContent.querySelector('[data-details-reminder]:last-of-type')?.focus();});
+ detailsStepContent.querySelectorAll('[data-remove-reminder]').forEach(btn=>btn.addEventListener('click',()=>{const row=btn.closest('.reminder-row');const vals=[...detailsStepContent.querySelectorAll('[data-details-reminder]')].map(x=>x.value);const idx=[...row.parentElement.children].indexOf(row);vals.splice(idx,1);m.reminderTimes=vals;detailsRender();}));
+ detailsStepContent.querySelectorAll('[data-details-preset]').forEach(btn=>btn.addEventListener('click',()=>{m.image={type:'preset',value:btn.dataset.detailsPreset};if(detailsUploadUrl){URL.revokeObjectURL(detailsUploadUrl);detailsUploadUrl=null;}detailsRender();}));
+ const imageInput=document.getElementById('details-custom-image');
+ imageInput?.addEventListener('change',()=>{const file=imageInput.files?.[0];if(!file||!file.type.startsWith('image/'))return;if(detailsUploadUrl)URL.revokeObjectURL(detailsUploadUrl);detailsUploadUrl=URL.createObjectURL(file);m.image={type:'upload',value:file.name,previewUrl:detailsUploadUrl};detailsRender();});
+ document.getElementById('details-remove-image')?.addEventListener('click',()=>{m.image={type:'preset',value:'bottle'};if(detailsUploadUrl){URL.revokeObjectURL(detailsUploadUrl);detailsUploadUrl=null;}detailsRender();});
+}
+function detailsShowDeleteDialog(m) {
+ let dialog=document.getElementById('details-delete-dialog');
+ if(!dialog){dialog=document.createElement('div');dialog.id='details-delete-dialog';dialog.className='details-delete-overlay';dialog.innerHTML=`<div class="details-delete-dialog" role="dialog" aria-modal="true" aria-labelledby="details-delete-title"><div class="details-delete-icon"><i class="fa-solid fa-trash"></i></div><h2 id="details-delete-title">Delete medication?</h2><p id="details-delete-message"></p><div class="details-delete-actions"><button type="button" id="details-delete-cancel" class="details-dialog-cancel">Cancel</button><button type="button" id="details-delete-confirm" class="details-dialog-confirm">Delete</button></div></div>`;detailsWorkspace.appendChild(dialog);}
+ dialog.querySelector('#details-delete-message').textContent=`${m.name} will be removed from your medication list. This action cannot be undone.`;dialog.hidden=false;
+ dialog.querySelector('#details-delete-cancel').onclick=()=>dialog.hidden=true;
+ dialog.querySelector('#details-delete-confirm').onclick=()=>{medications=medications.filter(x=>x.id!==m.id);dialog.hidden=true;detailsExit();renderMedications();};
+ dialog.onclick=e=>{if(e.target===dialog)dialog.hidden=true;};
+}
+function detailsOpen(m) { viewedMedicationId=m.id;detailsStep=0;detailsEditing=false;medicationTabs.forEach(t=>t.hidden=true);Object.values(medicationPanels).forEach(p=>p.hidden=true);detailsWorkspace.hidden=false;document.querySelector(".medications-workspace").classList.add("details-view-active");detailsRender(); }
+function detailsExit() { detailsWorkspace.hidden=true;document.querySelector('.medications-workspace').classList.remove('details-view-active');medicationTabs.forEach(t=>t.hidden=false);switchMainTab('list');viewedMedicationId=null;detailsEditing=false; }
+detailsBack.addEventListener('click',detailsExit);
 
+// INITIALIZE MEDISYNC
+addReminderRow();
 updateQuantityAvailability();
 updateScheduleFields();
 showStep(0);
 updateDraftCount();
 renderMedications();
-
-
-// ========================================
-// END OF MEDISYNC MEDICATIONS FRONTEND
-// ========================================

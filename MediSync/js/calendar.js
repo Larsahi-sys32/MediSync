@@ -9,7 +9,7 @@ let medications = [
     name: "Test Medication",
     dose: "500 mg",
     time: "08:00 AM",
-    date: "2026-11-24",
+    date: "2026-11-25",
     instructions: "This is a test instruction.",
     notificationEnabled: true,
     status: "upcoming"
